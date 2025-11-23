@@ -1,0 +1,312 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red255\green255\blue254;\red0\green0\blue0;
+\red14\green110\blue109;\red144\green1\blue18;\red19\green118\blue70;\red107\green0\blue1;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c100000;\cssrgb\c100000\c100000\c99608;\cssrgb\c0\c0\c0;
+\cssrgb\c0\c50196\c50196;\cssrgb\c63922\c8235\c8235;\cssrgb\c3529\c52549\c34510;\cssrgb\c50196\c0\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs28 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 import\cf0 \strokec4  \cf5 \strokec5 React\cf0 \strokec4 , \{ useState, useEffect \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "react"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ base44 \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/api/base44Client"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ useQuery, useMutation, useQueryClient \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@tanstack/react-query"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Card\cf0 \strokec4 , \cf5 \strokec5 CardContent\cf0 \strokec4 , \cf5 \strokec5 CardHeader\cf0 \strokec4 , \cf5 \strokec5 CardTitle\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/card"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Badge\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/badge"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Button\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/button"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Input\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/input"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Textarea\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/textarea"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Label\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/label"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3 \strokec4   \cf5 \strokec5 FileText\cf0 \strokec4 , \cb1 \strokec4 \
+\cb3 \strokec4   \cf5 \strokec5 Calendar\cf0 \strokec4 , \cb1 \strokec4 \
+\cb3 \strokec4   \cf5 \strokec5 ExternalLink\cf0 \strokec4 , \cb1 \strokec4 \
+\cb3 \strokec4   \cf5 \strokec5 CheckCircle2\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   \cf5 \strokec5 XCircle\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   \cf5 \strokec5 AlertCircle\cf0 \cb1 \strokec4 \
+\cb3 \strokec4 \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "lucide-react"\cf0 \strokec4 ;\cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ format \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "date-fns"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{\cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3 \strokec4   \cf5 \strokec5 Dialog\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   \cf5 \strokec5 DialogContent\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   \cf5 \strokec5 DialogHeader\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   \cf5 \strokec5 DialogTitle\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4 \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/dialog"\cf0 \strokec4 ;\cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ toast \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "sonner"\cf0 \strokec4 ;\cb1 \strokec4 \
+\
+\cf2 \cb3 \strokec2 const\cf0 \strokec4  statusColors = \{\cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3 \strokec4   pending: \cf6 \strokec6 "bg-amber-100 text-amber-700 border-amber-300"\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   reviewed: \cf6 \strokec6 "bg-blue-100 text-blue-700 border-blue-300"\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   approved: \cf6 \strokec6 "bg-emerald-100 text-emerald-700 border-emerald-300"\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   needs_revision: \cf6 \strokec6 "bg-red-100 text-red-700 border-red-300"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4 \};\cb1 \strokec4 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 export\cf0 \strokec4  \cf2 \strokec2 default\cf0 \strokec4  \cf2 \strokec2 function\cf0 \strokec4  \cf5 \strokec5 Evaluations\cf0 \strokec4 () \{\cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  [user, setUser] = useState(\cf2 \strokec2 null\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  [selectedSubmission, setSelectedSubmission] = useState(\cf2 \strokec2 null\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  [feedback, setFeedback] = useState(\cf6 \strokec6 ""\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  [grade, setGrade] = useState(\cf6 \strokec6 ""\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  [newStatus, setNewStatus] = useState(\cf6 \strokec6 ""\cf0 \strokec4 );\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  queryClient = useQueryClient();\cb1 \strokec4 \
+\
+\cb3 \strokec4   useEffect(() => \{\cb1 \strokec4 \
+\cb3 \strokec4     base44.auth.me().then(setUser).\cf2 \strokec2 catch\cf0 \strokec4 (() => \{\});\cb1 \strokec4 \
+\cb3 \strokec4   \}, []);\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  \{ data: submissions = [], isLoading \} = useQuery(\{\cb1 \strokec4 \
+\cb3 \strokec4     queryKey: [\cf6 \strokec6 'submissions'\cf0 \strokec4 ],\cb1 \strokec4 \
+\cb3 \strokec4     queryFn: () => base44.entities.\cf5 \strokec5 Submission\cf0 \strokec4 .list(\cf6 \strokec6 '-created_date'\cf0 \strokec4 ),\cb1 \strokec4 \
+\cb3 \strokec4     enabled: !!user,\cb1 \strokec4 \
+\cb3 \strokec4   \});\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  \{ data: projects = [] \} = useQuery(\{\cb1 \strokec4 \
+\cb3 \strokec4     queryKey: [\cf6 \strokec6 'projects'\cf0 \strokec4 ],\cb1 \strokec4 \
+\cb3 \strokec4     queryFn: () => base44.entities.\cf5 \strokec5 Project\cf0 \strokec4 .list(),\cb1 \strokec4 \
+\cb3 \strokec4     enabled: !!user,\cb1 \strokec4 \
+\cb3 \strokec4   \});\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  updateSubmissionMutation = useMutation(\{\cb1 \strokec4 \
+\cb3 \strokec4     mutationFn: (\{ id, data \}) => base44.entities.\cf5 \strokec5 Submission\cf0 \strokec4 .update(id, data),\cb1 \strokec4 \
+\cb3 \strokec4     onSuccess: () => \{\cb1 \strokec4 \
+\cb3 \strokec4       queryClient.invalidateQueries(\{ queryKey: [\cf6 \strokec6 'submissions'\cf0 \strokec4 ] \});\cb1 \strokec4 \
+\cb3 \strokec4       setSelectedSubmission(\cf2 \strokec2 null\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4       setFeedback(\cf6 \strokec6 ""\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4       setGrade(\cf6 \strokec6 ""\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4       setNewStatus(\cf6 \strokec6 ""\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4       toast.success(\cf6 \strokec6 "Evaluation submitted successfully"\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4     \},\cb1 \strokec4 \
+\cb3 \strokec4   \});\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 if\cf0 \strokec4  (!user) \{\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 return\cf0 \strokec4  (\cb1 \strokec4 \
+\cb3 \strokec4       <div className=\cf6 \strokec6 "flex items-center justify-center min-h-screen"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4         <div className=\cf6 \strokec6 "animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"\cf0 \strokec4 ></div>\cb1 \strokec4 \
+\cb3 \strokec4       </div>\cb1 \strokec4 \
+\cb3 \strokec4     );\cb1 \strokec4 \
+\cb3 \strokec4   \}\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  myStudentsProjects = projects.filter(p => p.supervisor_email === user.email);\cb1 \strokec4 \
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  myStudentsProjectIds = myStudentsProjects.map(p => p.id);\cb1 \strokec4 \
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  relevantSubmissions = submissions.filter(s => myStudentsProjectIds.includes(s.project_id));\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  handleOpenEvaluation = (submission) => \{\cb1 \strokec4 \
+\cb3 \strokec4     setSelectedSubmission(submission);\cb1 \strokec4 \
+\cb3 \strokec4     setFeedback(submission.feedback || \cf6 \strokec6 ""\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4     setGrade(submission.grade?.toString() || \cf6 \strokec6 ""\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4     setNewStatus(submission.status);\cb1 \strokec4 \
+\cb3 \strokec4   \};\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  handleSubmitEvaluation = () => \{\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 if\cf0 \strokec4  (!selectedSubmission) \cf2 \strokec2 return\cf0 \strokec4 ;\cb1 \strokec4 \
+\
+\cb3 \strokec4     \cf2 \strokec2 const\cf0 \strokec4  updateData = \{\cb1 \strokec4 \
+\cb3 \strokec4       status: newStatus,\cb1 \strokec4 \
+\cb3 \strokec4       feedback,\cb1 \strokec4 \
+\cb3 \strokec4     \};\cb1 \strokec4 \
+\
+\cb3 \strokec4     \cf2 \strokec2 if\cf0 \strokec4  (grade) \{\cb1 \strokec4 \
+\cb3 \strokec4       updateData.grade = parseFloat(grade);\cb1 \strokec4 \
+\cb3 \strokec4     \}\cb1 \strokec4 \
+\
+\cb3 \strokec4     updateSubmissionMutation.mutate(\{\cb1 \strokec4 \
+\cb3 \strokec4       id: selectedSubmission.id,\cb1 \strokec4 \
+\cb3 \strokec4       data: updateData\cb1 \strokec4 \
+\cb3 \strokec4     \});\cb1 \strokec4 \
+\cb3 \strokec4   \};\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 return\cf0 \strokec4  (\cb1 \strokec4 \
+\cb3 \strokec4     <div className=\cf6 \strokec6 "p-6 lg:p-8"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4       <div className=\cf6 \strokec6 "mb-8"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4         <h1 className=\cf6 \strokec6 "text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           \cf5 \strokec5 Student\cf0 \strokec4  \cf5 \strokec5 Evaluations\cf0 \cb1 \strokec4 \
+\cb3 \strokec4         </h1>\cb1 \strokec4 \
+\cb3 \strokec4         <p className=\cf6 \strokec6 "text-slate-500 mt-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           \cf5 \strokec5 Review\cf0 \strokec4  and evaluate student submissions\cb1 \strokec4 \
+\cb3 \strokec4         </p>\cb1 \strokec4 \
+\cb3 \strokec4       </div>\cb1 \strokec4 \
+\
+\cb3 \strokec4       \{isLoading ? (\cb1 \strokec4 \
+\cb3 \strokec4         <div className=\cf6 \strokec6 "text-center py-12"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           <div className=\cf6 \strokec6 "animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"\cf0 \strokec4 ></div>\cb1 \strokec4 \
+\cb3 \strokec4           <p className=\cf6 \strokec6 "text-slate-500 mt-4"\cf0 \strokec4 >\cf5 \strokec5 Loading\cf0 \strokec4  submissions...</p>\cb1 \strokec4 \
+\cb3 \strokec4         </div>\cb1 \strokec4 \
+\cb3 \strokec4       ) : relevantSubmissions.length > \cf7 \strokec7 0\cf0 \strokec4  ? (\cb1 \strokec4 \
+\cb3 \strokec4         <div className=\cf6 \strokec6 "grid gap-6"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           \{relevantSubmissions.map(submission => \{\cb1 \strokec4 \
+\cb3 \strokec4             \cf2 \strokec2 const\cf0 \strokec4  project = projects.find(p => p.id === submission.project_id);\cb1 \strokec4 \
+\cb3 \strokec4             \cb1 \strokec4 \
+\cb3 \strokec4             \cf2 \strokec2 return\cf0 \strokec4  (\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 Card\cf0 \strokec4  key=\{submission.id\} className=\cf6 \strokec6 "border-slate-200/60 shadow-xl shadow-slate-200/50 hover:shadow-2xl transition-shadow"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <\cf5 \strokec5 CardHeader\cf0 \strokec4  className=\cf6 \strokec6 "border-b border-slate-100"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <div className=\cf6 \strokec6 "flex flex-col md:flex-row justify-between items-start md:items-center gap-4"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                     <div>\cb1 \strokec4 \
+\cb3 \strokec4                       <\cf5 \strokec5 CardTitle\cf0 \strokec4  className=\cf6 \strokec6 "text-xl font-bold text-slate-900 mb-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                         \{submission.title\}\cb1 \strokec4 \
+\cb3 \strokec4                       </\cf5 \strokec5 CardTitle\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                       <p className=\cf6 \strokec6 "text-sm text-slate-600 mb-1"\cf0 \strokec4 >\{project?.title\}</p>\cb1 \strokec4 \
+\cb3 \strokec4                       <p className=\cf6 \strokec6 "text-sm text-slate-500"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                         \cf5 \strokec5 Student\cf0 \strokec4 : \{project?.student_name || project?.student_email\}\cb1 \strokec4 \
+\cb3 \strokec4                       </p>\cb1 \strokec4 \
+\cb3 \strokec4                     </div>\cb1 \strokec4 \
+\cb3 \strokec4                     <\cf5 \strokec5 Badge\cf0 \strokec4  className=\{\cf6 \strokec6 `\cf0 \strokec4 $\{statusColors[submission.status]\}\cf6 \strokec6  border font-medium`\cf0 \strokec4 \}>\cb1 \strokec4 \
+\cb3 \strokec4                       \{submission.status.replace(\cf8 \strokec8 /_/\cf2 \strokec2 g\cf0 \strokec4 , \cf6 \strokec6 ' '\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4                     </\cf5 \strokec5 Badge\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   </div>\cb1 \strokec4 \
+\cb3 \strokec4                 </\cf5 \strokec5 CardHeader\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <\cf5 \strokec5 CardContent\cf0 \strokec4  className=\cf6 \strokec6 "p-6"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   \{submission.description && (\cb1 \strokec4 \
+\cb3 \strokec4                     <p className=\cf6 \strokec6 "text-slate-600 mb-4"\cf0 \strokec4 >\{submission.description\}</p>\cb1 \strokec4 \
+\cb3 \strokec4                   )\}\cb1 \strokec4 \
+\
+\cb3 \strokec4                   <div className=\cf6 \strokec6 "grid md:grid-cols-2 gap-4 mb-4"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                     <div className=\cf6 \strokec6 "flex items-center gap-2 text-sm text-slate-600"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                       <\cf5 \strokec5 FileText\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                       <span className=\cf6 \strokec6 "font-medium"\cf0 \strokec4 >\cf5 \strokec5 Type\cf0 \strokec4 :</span> \{submission.type\}\cb1 \strokec4 \
+\cb3 \strokec4                     </div>\cb1 \strokec4 \
+\cb3 \strokec4                     <div className=\cf6 \strokec6 "flex items-center gap-2 text-sm text-slate-600"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                       <\cf5 \strokec5 Calendar\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                       <span className=\cf6 \strokec6 "font-medium"\cf0 \strokec4 >\cf5 \strokec5 Submitted\cf0 \strokec4 :</span> \{format(\cf2 \strokec2 new\cf0 \strokec4  \cf5 \strokec5 Date\cf0 \strokec4 (submission.created_date), \cf6 \strokec6 "MMM d, yyyy"\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4                     </div>\cb1 \strokec4 \
+\cb3 \strokec4                     \{submission.due_date && (\cb1 \strokec4 \
+\cb3 \strokec4                       <div className=\cf6 \strokec6 "flex items-center gap-2 text-sm text-slate-600"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                         <\cf5 \strokec5 Calendar\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                         <span className=\cf6 \strokec6 "font-medium"\cf0 \strokec4 >\cf5 \strokec5 Due\cf0 \strokec4 :</span> \{format(\cf2 \strokec2 new\cf0 \strokec4  \cf5 \strokec5 Date\cf0 \strokec4 (submission.due_date), \cf6 \strokec6 "MMM d, yyyy"\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4                       </div>\cb1 \strokec4 \
+\cb3 \strokec4                     )\}\cb1 \strokec4 \
+\cb3 \strokec4                     \{submission.grade !== \cf2 \strokec2 null\cf0 \strokec4  && submission.grade !== \cf2 \strokec2 undefined\cf0 \strokec4  && (\cb1 \strokec4 \
+\cb3 \strokec4                       <div className=\cf6 \strokec6 "flex items-center gap-2 text-sm"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                         <span className=\cf6 \strokec6 "font-medium text-slate-600"\cf0 \strokec4 >\cf5 \strokec5 Grade\cf0 \strokec4 :</span>\cb1 \strokec4 \
+\cb3 \strokec4                         <span className=\cf6 \strokec6 "text-lg font-bold text-indigo-600"\cf0 \strokec4 >\{submission.grade\}/\cf7 \strokec7 20\cf0 \strokec4 </span>\cb1 \strokec4 \
+\cb3 \strokec4                       </div>\cb1 \strokec4 \
+\cb3 \strokec4                     )\}\cb1 \strokec4 \
+\cb3 \strokec4                   </div>\cb1 \strokec4 \
+\
+\cb3 \strokec4                   \{submission.feedback && (\cb1 \strokec4 \
+\cb3 \strokec4                     <div className=\cf6 \strokec6 "p-4 bg-slate-50 rounded-lg mb-4"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                       <p className=\cf6 \strokec6 "text-sm font-medium text-slate-700 mb-2"\cf0 \strokec4 >\cf5 \strokec5 Your\cf0 \strokec4  \cf5 \strokec5 Feedback\cf0 \strokec4 :</p>\cb1 \strokec4 \
+\cb3 \strokec4                       <p className=\cf6 \strokec6 "text-sm text-slate-600"\cf0 \strokec4 >\{submission.feedback\}</p>\cb1 \strokec4 \
+\cb3 \strokec4                     </div>\cb1 \strokec4 \
+\cb3 \strokec4                   )\}\cb1 \strokec4 \
+\
+\cb3 \strokec4                   <div className=\cf6 \strokec6 "flex gap-3"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                     \{submission.file_url && (\cb1 \strokec4 \
+\cb3 \strokec4                       <a href=\{submission.file_url\} target=\cf6 \strokec6 "_blank"\cf0 \strokec4  rel=\cf6 \strokec6 "noopener noreferrer"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                         <\cf5 \strokec5 Button\cf0 \strokec4  variant=\cf6 \strokec6 "outline"\cf0 \strokec4  size=\cf6 \strokec6 "sm"\cf0 \strokec4  className=\cf6 \strokec6 "gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                           <\cf5 \strokec5 ExternalLink\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                           \cf5 \strokec5 View\cf0 \strokec4  \cf5 \strokec5 File\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                         </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                       </a>\cb1 \strokec4 \
+\cb3 \strokec4                     )\}\cb1 \strokec4 \
+\cb3 \strokec4                     <\cf5 \strokec5 Button\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4                       onClick=\{() => handleOpenEvaluation(submission)\}\cb1 \strokec4 \
+\cb3 \strokec4                       className=\cf6 \strokec6 "bg-gradient-to-r from-indigo-600 to-indigo-700 gap-2"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                       size=\cf6 \strokec6 "sm"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                     >\cb1 \strokec4 \
+\cb3 \strokec4                       \{submission.status === \cf6 \strokec6 'pending'\cf0 \strokec4  ? \cf6 \strokec6 'Evaluate'\cf0 \strokec4  : \cf6 \strokec6 'Update Evaluation'\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4                     </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   </div>\cb1 \strokec4 \
+\cb3 \strokec4                 </\cf5 \strokec5 CardContent\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               </\cf5 \strokec5 Card\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             );\cb1 \strokec4 \
+\cb3 \strokec4           \})\}\cb1 \strokec4 \
+\cb3 \strokec4         </div>\cb1 \strokec4 \
+\cb3 \strokec4       ) : (\cb1 \strokec4 \
+\cb3 \strokec4         <div className=\cf6 \strokec6 "text-center py-12 bg-white rounded-xl border border-slate-200 shadow-lg"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           <\cf5 \strokec5 FileText\cf0 \strokec4  className=\cf6 \strokec6 "w-12 h-12 text-slate-300 mx-auto mb-4"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4           <p className=\cf6 \strokec6 "text-slate-500"\cf0 \strokec4 >\cf5 \strokec5 No\cf0 \strokec4  submissions to evaluate</p>\cb1 \strokec4 \
+\cb3 \strokec4         </div>\cb1 \strokec4 \
+\cb3 \strokec4       )\}\cb1 \strokec4 \
+\
+\cb3 \strokec4       <\cf5 \strokec5 Dialog\cf0 \strokec4  open=\{!!selectedSubmission\} onOpenChange=\{() => setSelectedSubmission(\cf2 \strokec2 null\cf0 \strokec4 )\}>\cb1 \strokec4 \
+\cb3 \strokec4         <\cf5 \strokec5 DialogContent\cf0 \strokec4  className=\cf6 \strokec6 "max-w-2xl"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           <\cf5 \strokec5 DialogHeader\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 DialogTitle\cf0 \strokec4  className=\cf6 \strokec6 "text-2xl font-bold"\cf0 \strokec4 >\cf5 \strokec5 Evaluate\cf0 \strokec4  \cf5 \strokec5 Submission\cf0 \strokec4 </\cf5 \strokec5 DialogTitle\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           </\cf5 \strokec5 DialogHeader\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           \cb1 \strokec4 \
+\cb3 \strokec4           <div className=\cf6 \strokec6 "space-y-6 mt-4"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             <div className=\cf6 \strokec6 "space-y-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 Label\cf0 \strokec4 >\cf5 \strokec5 Status\cf0 \strokec4 </\cf5 \strokec5 Label\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "flex gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <\cf5 \strokec5 Button\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                   variant=\{newStatus === \cf6 \strokec6 'approved'\cf0 \strokec4  ? \cf6 \strokec6 'default'\cf0 \strokec4  : \cf6 \strokec6 'outline'\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4                   onClick=\{() => setNewStatus(\cf6 \strokec6 'approved'\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4                   className=\{newStatus === \cf6 \strokec6 'approved'\cf0 \strokec4  ? \cf6 \strokec6 'bg-emerald-600'\cf0 \strokec4  : \cf6 \strokec6 ''\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4                 >\cb1 \strokec4 \
+\cb3 \strokec4                   <\cf5 \strokec5 CheckCircle2\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 mr-2"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                   \cf5 \strokec5 Approve\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <\cf5 \strokec5 Button\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                   variant=\{newStatus === \cf6 \strokec6 'needs_revision'\cf0 \strokec4  ? \cf6 \strokec6 'default'\cf0 \strokec4  : \cf6 \strokec6 'outline'\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4                   onClick=\{() => setNewStatus(\cf6 \strokec6 'needs_revision'\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4                   className=\{newStatus === \cf6 \strokec6 'needs_revision'\cf0 \strokec4  ? \cf6 \strokec6 'bg-red-600'\cf0 \strokec4  : \cf6 \strokec6 ''\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4                 >\cb1 \strokec4 \
+\cb3 \strokec4                   <\cf5 \strokec5 XCircle\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 mr-2"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                   \cf5 \strokec5 Needs\cf0 \strokec4  \cf5 \strokec5 Revision\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <\cf5 \strokec5 Button\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                   variant=\{newStatus === \cf6 \strokec6 'reviewed'\cf0 \strokec4  ? \cf6 \strokec6 'default'\cf0 \strokec4  : \cf6 \strokec6 'outline'\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4                   onClick=\{() => setNewStatus(\cf6 \strokec6 'reviewed'\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4                   className=\{newStatus === \cf6 \strokec6 'reviewed'\cf0 \strokec4  ? \cf6 \strokec6 'bg-blue-600'\cf0 \strokec4  : \cf6 \strokec6 ''\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4                 >\cb1 \strokec4 \
+\cb3 \strokec4                   <\cf5 \strokec5 AlertCircle\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 mr-2"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                   \cf5 \strokec5 Reviewed\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4             </div>\cb1 \strokec4 \
+\
+\cb3 \strokec4             <div className=\cf6 \strokec6 "space-y-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 Label\cf0 \strokec4  htmlFor=\cf6 \strokec6 "grade"\cf0 \strokec4 >\cf5 \strokec5 Grade\cf0 \strokec4  (out \cf2 \strokec2 of\cf0 \strokec4  \cf7 \strokec7 20\cf0 \strokec4 )</\cf5 \strokec5 Label\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 Input\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 id=\cf6 \strokec6 "grade"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 type=\cf6 \strokec6 "number"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 min=\cf6 \strokec6 "0"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 max=\cf6 \strokec6 "20"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 step=\cf6 \strokec6 "0.5"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 value=\{grade\}\cb1 \strokec4 \
+\cb3 \strokec4                 onChange=\{(e) => setGrade(e.target.value)\}\cb1 \strokec4 \
+\cb3 \strokec4                 placeholder=\cf6 \strokec6 "Enter grade"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4               />\cb1 \strokec4 \
+\cb3 \strokec4             </div>\cb1 \strokec4 \
+\
+\cb3 \strokec4             <div className=\cf6 \strokec6 "space-y-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 Label\cf0 \strokec4  htmlFor=\cf6 \strokec6 "feedback"\cf0 \strokec4 >\cf5 \strokec5 Feedback\cf0 \strokec4 </\cf5 \strokec5 Label\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 Textarea\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 id=\cf6 \strokec6 "feedback"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 value=\{feedback\}\cb1 \strokec4 \
+\cb3 \strokec4                 onChange=\{(e) => setFeedback(e.target.value)\}\cb1 \strokec4 \
+\cb3 \strokec4                 placeholder=\cf6 \strokec6 "Provide detailed feedback to the student..."\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 rows=\{\cf7 \strokec7 6\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4               />\cb1 \strokec4 \
+\cb3 \strokec4             </div>\cb1 \strokec4 \
+\
+\cb3 \strokec4             <div className=\cf6 \strokec6 "flex justify-end gap-3 pt-4 border-t"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 Button\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4                 variant=\cf6 \strokec6 "outline"\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4                 onClick=\{() => setSelectedSubmission(\cf2 \strokec2 null\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4               >\cb1 \strokec4 \
+\cb3 \strokec4                 \cf5 \strokec5 Cancel\cf0 \cb1 \strokec4 \
+\cb3 \strokec4               </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 Button\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4                 onClick=\{handleSubmitEvaluation\}\cb1 \strokec4 \
+\cb3 \strokec4                 disabled=\{updateSubmissionMutation.isPending\}\cb1 \strokec4 \
+\cb3 \strokec4                 className=\cf6 \strokec6 "bg-gradient-to-r from-indigo-600 to-indigo-700"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4               >\cb1 \strokec4 \
+\cb3 \strokec4                 \{updateSubmissionMutation.isPending ? \cf6 \strokec6 "Submitting..."\cf0 \strokec4  : \cf6 \strokec6 "Submit Evaluation"\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4               </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             </div>\cb1 \strokec4 \
+\cb3 \strokec4           </div>\cb1 \strokec4 \
+\cb3 \strokec4         </\cf5 \strokec5 DialogContent\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4       </\cf5 \strokec5 Dialog\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4     </div>\cb1 \strokec4 \
+\cb3 \strokec4   );\cb1 \strokec4 \
+\cb3 \strokec4 \}\cb1 \strokec4 \
+}

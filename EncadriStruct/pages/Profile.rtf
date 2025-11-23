@@ -1,0 +1,368 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red255\green255\blue254;\red0\green0\blue0;
+\red14\green110\blue109;\red144\green1\blue18;\red19\green118\blue70;\red15\green112\blue1;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c100000;\cssrgb\c100000\c100000\c99608;\cssrgb\c0\c0\c0;
+\cssrgb\c0\c50196\c50196;\cssrgb\c63922\c8235\c8235;\cssrgb\c3529\c52549\c34510;\cssrgb\c0\c50196\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs28 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 import\cf0 \strokec4  \cf5 \strokec5 React\cf0 \strokec4 , \{ useState, useEffect \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "react"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ base44 \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/api/base44Client"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ useMutation, useQueryClient \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@tanstack/react-query"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Card\cf0 \strokec4 , \cf5 \strokec5 CardContent\cf0 \strokec4 , \cf5 \strokec5 CardHeader\cf0 \strokec4 , \cf5 \strokec5 CardTitle\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/card"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Button\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/button"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Input\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/input"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Label\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/label"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Textarea\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/textarea"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Avatar\cf0 \strokec4 , \cf5 \strokec5 AvatarFallback\cf0 \strokec4 , \cf5 \strokec5 AvatarImage\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/avatar"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3   \cf5 \strokec5 User\cf0 \strokec4 , \cb1 \
+\cb3   \cf5 \strokec5 Mail\cf0 \strokec4 , \cb1 \
+\cb3   \cf5 \strokec5 Phone\cf0 \strokec4 , \cb1 \
+\cb3   \cf5 \strokec5 Building2\cf0 \strokec4 , \cb1 \
+\cb3   \cf5 \strokec5 GraduationCap\cf0 \strokec4 , \cb1 \
+\cb3   \cf5 \strokec5 Upload\cf0 \strokec4 ,\cb1 \
+\cb3   \cf5 \strokec5 Save\cf0 \strokec4 ,\cb1 \
+\cb3   \cf5 \strokec5 Camera\cf0 \cb1 \strokec4 \
+\cb3 \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "lucide-react"\cf0 \strokec4 ;\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ toast \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "sonner"\cf0 \strokec4 ;\cb1 \
+\
+\cf2 \cb3 \strokec2 export\cf0 \strokec4  \cf2 \strokec2 default\cf0 \strokec4  \cf2 \strokec2 function\cf0 \strokec4  \cf5 \strokec5 Profile\cf0 \strokec4 () \{\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3   \cf2 \strokec2 const\cf0 \strokec4  [user, setUser] = useState(\cf2 \strokec2 null\cf0 \strokec4 );\cb1 \
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  [isEditing, setIsEditing] = useState(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  [isUploading, setIsUploading] = useState(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  [formData, setFormData] = useState(\{\cb1 \
+\cb3     full_name: \cf6 \strokec6 ""\cf0 \strokec4 ,\cb1 \
+\cb3     phone: \cf6 \strokec6 ""\cf0 \strokec4 ,\cb1 \
+\cb3     department: \cf6 \strokec6 ""\cf0 \strokec4 ,\cb1 \
+\cb3     specialization: \cf6 \strokec6 ""\cf0 \strokec4 ,\cb1 \
+\cb3     bio: \cf6 \strokec6 ""\cf0 \strokec4 ,\cb1 \
+\cb3     level: \cf6 \strokec6 ""\cf0 \strokec4 ,\cb1 \
+\cb3     student_id: \cf6 \strokec6 ""\cf0 \cb1 \strokec4 \
+\cb3   \});\cb1 \
+\
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  queryClient = useQueryClient();\cb1 \
+\
+\cb3   useEffect(() => \{\cb1 \
+\cb3     base44.auth.me().then(userData => \{\cb1 \
+\cb3       setUser(userData);\cb1 \
+\cb3       setFormData(\{\cb1 \
+\cb3         full_name: userData.full_name || \cf6 \strokec6 ""\cf0 \strokec4 ,\cb1 \
+\cb3         phone: userData.phone || \cf6 \strokec6 ""\cf0 \strokec4 ,\cb1 \
+\cb3         department: userData.department || \cf6 \strokec6 ""\cf0 \strokec4 ,\cb1 \
+\cb3         specialization: userData.specialization || \cf6 \strokec6 ""\cf0 \strokec4 ,\cb1 \
+\cb3         bio: userData.bio || \cf6 \strokec6 ""\cf0 \strokec4 ,\cb1 \
+\cb3         level: userData.level || \cf6 \strokec6 ""\cf0 \strokec4 ,\cb1 \
+\cb3         student_id: userData.student_id || \cf6 \strokec6 ""\cf0 \cb1 \strokec4 \
+\cb3       \});\cb1 \
+\cb3     \}).\cf2 \strokec2 catch\cf0 \strokec4 (() => \{\});\cb1 \
+\cb3   \}, []);\cb1 \
+\
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  updateProfileMutation = useMutation(\{\cb1 \
+\cb3     mutationFn: (data) => base44.auth.updateMe(data),\cb1 \
+\cb3     onSuccess: (updatedUser) => \{\cb1 \
+\cb3       setUser(updatedUser);\cb1 \
+\cb3       setIsEditing(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \
+\cb3       toast.success(\cf6 \strokec6 "Profile updated successfully"\cf0 \strokec4 );\cb1 \
+\cb3     \},\cb1 \
+\cb3   \});\cb1 \
+\
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  handleAvatarUpload = \cf2 \strokec2 async\cf0 \strokec4  (e) => \{\cb1 \
+\cb3     \cf2 \strokec2 const\cf0 \strokec4  file = e.target.files[\cf7 \strokec7 0\cf0 \strokec4 ];\cb1 \
+\cb3     \cf2 \strokec2 if\cf0 \strokec4  (!file) \cf2 \strokec2 return\cf0 \strokec4 ;\cb1 \
+\
+\cb3     setIsUploading(\cf2 \strokec2 true\cf0 \strokec4 );\cb1 \
+\cb3     \cf2 \strokec2 try\cf0 \strokec4  \{\cb1 \
+\cb3       \cf2 \strokec2 const\cf0 \strokec4  \{ file_url \} = \cf2 \strokec2 await\cf0 \strokec4  base44.integrations.\cf5 \strokec5 Core\cf0 \strokec4 .\cf5 \strokec5 UploadFile\cf0 \strokec4 (\{ file \});\cb1 \
+\cb3       \cf2 \strokec2 await\cf0 \strokec4  base44.auth.updateMe(\{ avatar_url: file_url \});\cb1 \
+\cb3       \cf2 \strokec2 const\cf0 \strokec4  updatedUser = \cf2 \strokec2 await\cf0 \strokec4  base44.auth.me();\cb1 \
+\cb3       setUser(updatedUser);\cb1 \
+\cb3       toast.success(\cf6 \strokec6 "Profile picture updated"\cf0 \strokec4 );\cb1 \
+\cb3     \} \cf2 \strokec2 catch\cf0 \strokec4  (error) \{\cb1 \
+\cb3       toast.error(\cf6 \strokec6 "Failed to upload picture"\cf0 \strokec4 );\cb1 \
+\cb3     \}\cb1 \
+\cb3     setIsUploading(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \
+\cb3   \};\cb1 \
+\
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  handleSubmit = (e) => \{\cb1 \
+\cb3     e.preventDefault();\cb1 \
+\cb3     updateProfileMutation.mutate(formData);\cb1 \
+\cb3   \};\cb1 \
+\
+\cb3   \cf2 \strokec2 if\cf0 \strokec4  (!user) \{\cb1 \
+\cb3     \cf2 \strokec2 return\cf0 \strokec4  (\cb1 \
+\cb3       <div className=\cf6 \strokec6 "flex items-center justify-center min-h-screen"\cf0 \strokec4 >\cb1 \
+\cb3         <div className=\cf6 \strokec6 "animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"\cf0 \strokec4 ></div>\cb1 \
+\cb3       </div>\cb1 \
+\cb3     );\cb1 \
+\cb3   \}\cb1 \
+\
+\cb3   \cf2 \strokec2 return\cf0 \strokec4  (\cb1 \
+\cb3     <div className=\cf6 \strokec6 "p-6 lg:p-8"\cf0 \strokec4 >\cb1 \
+\cb3       <div className=\cf6 \strokec6 "max-w-4xl mx-auto"\cf0 \strokec4 >\cb1 \
+\cb3         <div className=\cf6 \strokec6 "mb-8"\cf0 \strokec4 >\cb1 \
+\cb3           <h1 className=\cf6 \strokec6 "text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight"\cf0 \strokec4 >\cb1 \
+\cb3             \cf5 \strokec5 My\cf0 \strokec4  \cf5 \strokec5 Profile\cf0 \cb1 \strokec4 \
+\cb3           </h1>\cb1 \
+\cb3           <p className=\cf6 \strokec6 "text-slate-500 mt-2"\cf0 \strokec4 >\cb1 \
+\cb3             \cf5 \strokec5 Manage\cf0 \strokec4  your account information and preferences\cb1 \
+\cb3           </p>\cb1 \
+\cb3         </div>\cb1 \
+\
+\cb3         <div className=\cf6 \strokec6 "grid lg:grid-cols-3 gap-6"\cf0 \strokec4 >\cb1 \
+\cb3           \{\cf8 \strokec8 /* Profile Picture Card */\cf0 \strokec4 \}\cb1 \
+\cb3           <\cf5 \strokec5 Card\cf0 \strokec4  className=\cf6 \strokec6 "lg:col-span-1 border-slate-200/60 shadow-xl shadow-slate-200/50"\cf0 \strokec4 >\cb1 \
+\cb3             <\cf5 \strokec5 CardContent\cf0 \strokec4  className=\cf6 \strokec6 "p-6"\cf0 \strokec4 >\cb1 \
+\cb3               <div className=\cf6 \strokec6 "flex flex-col items-center"\cf0 \strokec4 >\cb1 \
+\cb3                 <div className=\cf6 \strokec6 "relative group"\cf0 \strokec4 >\cb1 \
+\cb3                   <\cf5 \strokec5 Avatar\cf0 \strokec4  className=\cf6 \strokec6 "w-32 h-32 border-4 border-indigo-100"\cf0 \strokec4 >\cb1 \
+\cb3                     <\cf5 \strokec5 AvatarImage\cf0 \strokec4  src=\{user.avatar_url\} />\cb1 \
+\cb3                     <\cf5 \strokec5 AvatarFallback\cf0 \strokec4  className=\cf6 \strokec6 "bg-gradient-to-br from-indigo-500 to-indigo-600 text-white text-3xl font-bold"\cf0 \strokec4 >\cb1 \
+\cb3                       \{user.full_name?.charAt(\cf7 \strokec7 0\cf0 \strokec4 ) || user.email?.charAt(\cf7 \strokec7 0\cf0 \strokec4 ).toUpperCase()\}\cb1 \
+\cb3                     </\cf5 \strokec5 AvatarFallback\cf0 \strokec4 >\cb1 \
+\cb3                   </\cf5 \strokec5 Avatar\cf0 \strokec4 >\cb1 \
+\cb3                   <label className=\cf6 \strokec6 "absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"\cf0 \strokec4 >\cb1 \
+\cb3                     <\cf5 \strokec5 Camera\cf0 \strokec4  className=\cf6 \strokec6 "w-8 h-8 text-white"\cf0 \strokec4  />\cb1 \
+\cb3                     <input\cb1 \
+\cb3                       type=\cf6 \strokec6 "file"\cf0 \cb1 \strokec4 \
+\cb3                       accept=\cf6 \strokec6 "image/*"\cf0 \cb1 \strokec4 \
+\cb3                       onChange=\{handleAvatarUpload\}\cb1 \
+\cb3                       disabled=\{isUploading\}\cb1 \
+\cb3                       className=\cf6 \strokec6 "hidden"\cf0 \cb1 \strokec4 \
+\cb3                     />\cb1 \
+\cb3                   </label>\cb1 \
+\cb3                 </div>\cb1 \
+\cb3                 <h3 className=\cf6 \strokec6 "mt-4 text-xl font-bold text-slate-900 text-center"\cf0 \strokec4 >\cb1 \
+\cb3                   \{user.full_name\}\cb1 \
+\cb3                 </h3>\cb1 \
+\cb3                 <p className=\cf6 \strokec6 "text-sm text-slate-500 capitalize"\cf0 \strokec4 >\{user.user_role\}</p>\cb1 \
+\cb3                 <p className=\cf6 \strokec6 "text-xs text-slate-400 mt-2"\cf0 \strokec4 >\{user.email\}</p>\cb1 \
+\cb3               </div>\cb1 \
+\
+\cb3               <div className=\cf6 \strokec6 "mt-6 pt-6 border-t border-slate-200 space-y-4"\cf0 \strokec4 >\cb1 \
+\cb3                 <div className=\cf6 \strokec6 "flex items-center gap-3 text-sm"\cf0 \strokec4 >\cb1 \
+\cb3                   <\cf5 \strokec5 Mail\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 text-slate-400"\cf0 \strokec4  />\cb1 \
+\cb3                   <span className=\cf6 \strokec6 "text-slate-600"\cf0 \strokec4 >\{user.email\}</span>\cb1 \
+\cb3                 </div>\cb1 \
+\cb3                 \{user.phone && (\cb1 \
+\cb3                   <div className=\cf6 \strokec6 "flex items-center gap-3 text-sm"\cf0 \strokec4 >\cb1 \
+\cb3                     <\cf5 \strokec5 Phone\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 text-slate-400"\cf0 \strokec4  />\cb1 \
+\cb3                     <span className=\cf6 \strokec6 "text-slate-600"\cf0 \strokec4 >\{user.phone\}</span>\cb1 \
+\cb3                   </div>\cb1 \
+\cb3                 )\}\cb1 \
+\cb3                 \{user.department && (\cb1 \
+\cb3                   <div className=\cf6 \strokec6 "flex items-center gap-3 text-sm"\cf0 \strokec4 >\cb1 \
+\cb3                     <\cf5 \strokec5 Building2\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 text-slate-400"\cf0 \strokec4  />\cb1 \
+\cb3                     <span className=\cf6 \strokec6 "text-slate-600"\cf0 \strokec4 >\{user.department\}</span>\cb1 \
+\cb3                   </div>\cb1 \
+\cb3                 )\}\cb1 \
+\cb3                 \{user.level && (\cb1 \
+\cb3                   <div className=\cf6 \strokec6 "flex items-center gap-3 text-sm"\cf0 \strokec4 >\cb1 \
+\cb3                     <\cf5 \strokec5 GraduationCap\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 text-slate-400"\cf0 \strokec4  />\cb1 \
+\cb3                     <span className=\cf6 \strokec6 "text-slate-600"\cf0 \strokec4 >\{user.level\}</span>\cb1 \
+\cb3                   </div>\cb1 \
+\cb3                 )\}\cb1 \
+\cb3               </div>\cb1 \
+\cb3             </\cf5 \strokec5 CardContent\cf0 \strokec4 >\cb1 \
+\cb3           </\cf5 \strokec5 Card\cf0 \strokec4 >\cb1 \
+\
+\cb3           \{\cf8 \strokec8 /* Profile Information Card */\cf0 \strokec4 \}\cb1 \
+\cb3           <\cf5 \strokec5 Card\cf0 \strokec4  className=\cf6 \strokec6 "lg:col-span-2 border-slate-200/60 shadow-xl shadow-slate-200/50"\cf0 \strokec4 >\cb1 \
+\cb3             <\cf5 \strokec5 CardHeader\cf0 \strokec4  className=\cf6 \strokec6 "border-b border-slate-100"\cf0 \strokec4 >\cb1 \
+\cb3               <div className=\cf6 \strokec6 "flex justify-between items-center"\cf0 \strokec4 >\cb1 \
+\cb3                 <\cf5 \strokec5 CardTitle\cf0 \strokec4  className=\cf6 \strokec6 "text-xl font-bold text-slate-900"\cf0 \strokec4 >\cb1 \
+\cb3                   \cf5 \strokec5 Profile\cf0 \strokec4  \cf5 \strokec5 Information\cf0 \cb1 \strokec4 \
+\cb3                 </\cf5 \strokec5 CardTitle\cf0 \strokec4 >\cb1 \
+\cb3                 \{!isEditing && (\cb1 \
+\cb3                   <\cf5 \strokec5 Button\cf0 \cb1 \strokec4 \
+\cb3                     onClick=\{() => setIsEditing(\cf2 \strokec2 true\cf0 \strokec4 )\}\cb1 \
+\cb3                     variant=\cf6 \strokec6 "outline"\cf0 \cb1 \strokec4 \
+\cb3                     size=\cf6 \strokec6 "sm"\cf0 \cb1 \strokec4 \
+\cb3                   >\cb1 \
+\cb3                     \cf5 \strokec5 Edit\cf0 \strokec4  \cf5 \strokec5 Profile\cf0 \cb1 \strokec4 \
+\cb3                   </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \
+\cb3                 )\}\cb1 \
+\cb3               </div>\cb1 \
+\cb3             </\cf5 \strokec5 CardHeader\cf0 \strokec4 >\cb1 \
+\cb3             <\cf5 \strokec5 CardContent\cf0 \strokec4  className=\cf6 \strokec6 "p-6"\cf0 \strokec4 >\cb1 \
+\cb3               \{isEditing ? (\cb1 \
+\cb3                 <form onSubmit=\{handleSubmit\} className=\cf6 \strokec6 "space-y-4"\cf0 \strokec4 >\cb1 \
+\cb3                   <div className=\cf6 \strokec6 "space-y-2"\cf0 \strokec4 >\cb1 \
+\cb3                     <\cf5 \strokec5 Label\cf0 \strokec4  htmlFor=\cf6 \strokec6 "full_name"\cf0 \strokec4 >\cf5 \strokec5 Full\cf0 \strokec4  \cf5 \strokec5 Name\cf0 \strokec4 </\cf5 \strokec5 Label\cf0 \strokec4 >\cb1 \
+\cb3                     <\cf5 \strokec5 Input\cf0 \cb1 \strokec4 \
+\cb3                       id=\cf6 \strokec6 "full_name"\cf0 \cb1 \strokec4 \
+\cb3                       value=\{formData.full_name\}\cb1 \
+\cb3                       onChange=\{(e) => setFormData(\{ ...formData, full_name: e.target.value \})\}\cb1 \
+\cb3                       placeholder=\cf6 \strokec6 "Enter your full name"\cf0 \cb1 \strokec4 \
+\cb3                     />\cb1 \
+\cb3                   </div>\cb1 \
+\
+\cb3                   <div className=\cf6 \strokec6 "space-y-2"\cf0 \strokec4 >\cb1 \
+\cb3                     <\cf5 \strokec5 Label\cf0 \strokec4  htmlFor=\cf6 \strokec6 "phone"\cf0 \strokec4 >\cf5 \strokec5 Phone\cf0 \strokec4  \cf5 \strokec5 Number\cf0 \strokec4 </\cf5 \strokec5 Label\cf0 \strokec4 >\cb1 \
+\cb3                     <\cf5 \strokec5 Input\cf0 \cb1 \strokec4 \
+\cb3                       id=\cf6 \strokec6 "phone"\cf0 \cb1 \strokec4 \
+\cb3                       type=\cf6 \strokec6 "tel"\cf0 \cb1 \strokec4 \
+\cb3                       value=\{formData.phone\}\cb1 \
+\cb3                       onChange=\{(e) => setFormData(\{ ...formData, phone: e.target.value \})\}\cb1 \
+\cb3                       placeholder=\cf6 \strokec6 "+1 234 567 8900"\cf0 \cb1 \strokec4 \
+\cb3                     />\cb1 \
+\cb3                   </div>\cb1 \
+\
+\cb3                   \{user.user_role === \cf6 \strokec6 "student"\cf0 \strokec4  && (\cb1 \
+\cb3                     <>\cb1 \
+\cb3                       <div className=\cf6 \strokec6 "space-y-2"\cf0 \strokec4 >\cb1 \
+\cb3                         <\cf5 \strokec5 Label\cf0 \strokec4  htmlFor=\cf6 \strokec6 "student_id"\cf0 \strokec4 >\cf5 \strokec5 Student\cf0 \strokec4  \cf5 \strokec5 ID\cf0 \strokec4 </\cf5 \strokec5 Label\cf0 \strokec4 >\cb1 \
+\cb3                         <\cf5 \strokec5 Input\cf0 \cb1 \strokec4 \
+\cb3                           id=\cf6 \strokec6 "student_id"\cf0 \cb1 \strokec4 \
+\cb3                           value=\{formData.student_id\}\cb1 \
+\cb3                           onChange=\{(e) => setFormData(\{ ...formData, student_id: e.target.value \})\}\cb1 \
+\cb3                           placeholder=\cf6 \strokec6 "e.g., STU2024001"\cf0 \cb1 \strokec4 \
+\cb3                         />\cb1 \
+\cb3                       </div>\cb1 \
+\
+\cb3                       <div className=\cf6 \strokec6 "grid md:grid-cols-2 gap-4"\cf0 \strokec4 >\cb1 \
+\cb3                         <div className=\cf6 \strokec6 "space-y-2"\cf0 \strokec4 >\cb1 \
+\cb3                           <\cf5 \strokec5 Label\cf0 \strokec4  htmlFor=\cf6 \strokec6 "department"\cf0 \strokec4 >\cf5 \strokec5 Department\cf0 \strokec4 </\cf5 \strokec5 Label\cf0 \strokec4 >\cb1 \
+\cb3                           <\cf5 \strokec5 Input\cf0 \cb1 \strokec4 \
+\cb3                             id=\cf6 \strokec6 "department"\cf0 \cb1 \strokec4 \
+\cb3                             value=\{formData.department\}\cb1 \
+\cb3                             onChange=\{(e) => setFormData(\{ ...formData, department: e.target.value \})\}\cb1 \
+\cb3                             placeholder=\cf6 \strokec6 "Computer Science"\cf0 \cb1 \strokec4 \
+\cb3                           />\cb1 \
+\cb3                         </div>\cb1 \
+\
+\cb3                         <div className=\cf6 \strokec6 "space-y-2"\cf0 \strokec4 >\cb1 \
+\cb3                           <\cf5 \strokec5 Label\cf0 \strokec4  htmlFor=\cf6 \strokec6 "level"\cf0 \strokec4 >\cf5 \strokec5 Level\cf0 \strokec4 </\cf5 \strokec5 Label\cf0 \strokec4 >\cb1 \
+\cb3                           <\cf5 \strokec5 Input\cf0 \cb1 \strokec4 \
+\cb3                             id=\cf6 \strokec6 "level"\cf0 \cb1 \strokec4 \
+\cb3                             value=\{formData.level\}\cb1 \
+\cb3                             onChange=\{(e) => setFormData(\{ ...formData, level: e.target.value \})\}\cb1 \
+\cb3                             placeholder=\cf6 \strokec6 "e.g., 3rd Year, Master's"\cf0 \cb1 \strokec4 \
+\cb3                           />\cb1 \
+\cb3                         </div>\cb1 \
+\cb3                       </div>\cb1 \
+\
+\cb3                       <div className=\cf6 \strokec6 "space-y-2"\cf0 \strokec4 >\cb1 \
+\cb3                         <\cf5 \strokec5 Label\cf0 \strokec4  htmlFor=\cf6 \strokec6 "specialization"\cf0 \strokec4 >\cf5 \strokec5 Specialization\cf0 \strokec4 </\cf5 \strokec5 Label\cf0 \strokec4 >\cb1 \
+\cb3                         <\cf5 \strokec5 Input\cf0 \cb1 \strokec4 \
+\cb3                           id=\cf6 \strokec6 "specialization"\cf0 \cb1 \strokec4 \
+\cb3                           value=\{formData.specialization\}\cb1 \
+\cb3                           onChange=\{(e) => setFormData(\{ ...formData, specialization: e.target.value \})\}\cb1 \
+\cb3                           placeholder=\cf6 \strokec6 "Software Engineering, Data Science, etc."\cf0 \cb1 \strokec4 \
+\cb3                         />\cb1 \
+\cb3                       </div>\cb1 \
+\cb3                     </>\cb1 \
+\cb3                   )\}\cb1 \
+\
+\cb3                   \{user.user_role === \cf6 \strokec6 "supervisor"\cf0 \strokec4  && (\cb1 \
+\cb3                     <div className=\cf6 \strokec6 "space-y-2"\cf0 \strokec4 >\cb1 \
+\cb3                       <\cf5 \strokec5 Label\cf0 \strokec4  htmlFor=\cf6 \strokec6 "department"\cf0 \strokec4 >\cf5 \strokec5 Department\cf0 \strokec4 </\cf5 \strokec5 Label\cf0 \strokec4 >\cb1 \
+\cb3                       <\cf5 \strokec5 Input\cf0 \cb1 \strokec4 \
+\cb3                         id=\cf6 \strokec6 "department"\cf0 \cb1 \strokec4 \
+\cb3                         value=\{formData.department\}\cb1 \
+\cb3                         onChange=\{(e) => setFormData(\{ ...formData, department: e.target.value \})\}\cb1 \
+\cb3                         placeholder=\cf6 \strokec6 "Computer Science"\cf0 \cb1 \strokec4 \
+\cb3                       />\cb1 \
+\cb3                     </div>\cb1 \
+\cb3                   )\}\cb1 \
+\
+\cb3                   <div className=\cf6 \strokec6 "space-y-2"\cf0 \strokec4 >\cb1 \
+\cb3                     <\cf5 \strokec5 Label\cf0 \strokec4  htmlFor=\cf6 \strokec6 "bio"\cf0 \strokec4 >\cf5 \strokec5 Bio\cf0 \strokec4 </\cf5 \strokec5 Label\cf0 \strokec4 >\cb1 \
+\cb3                     <\cf5 \strokec5 Textarea\cf0 \cb1 \strokec4 \
+\cb3                       id=\cf6 \strokec6 "bio"\cf0 \cb1 \strokec4 \
+\cb3                       value=\{formData.bio\}\cb1 \
+\cb3                       onChange=\{(e) => setFormData(\{ ...formData, bio: e.target.value \})\}\cb1 \
+\cb3                       placeholder=\cf6 \strokec6 "Tell us about yourself..."\cf0 \cb1 \strokec4 \
+\cb3                       rows=\{\cf7 \strokec7 4\cf0 \strokec4 \}\cb1 \
+\cb3                     />\cb1 \
+\cb3                   </div>\cb1 \
+\
+\cb3                   <div className=\cf6 \strokec6 "flex justify-end gap-3 pt-4 border-t"\cf0 \strokec4 >\cb1 \
+\cb3                     <\cf5 \strokec5 Button\cf0 \cb1 \strokec4 \
+\cb3                       type=\cf6 \strokec6 "button"\cf0 \cb1 \strokec4 \
+\cb3                       variant=\cf6 \strokec6 "outline"\cf0 \cb1 \strokec4 \
+\cb3                       onClick=\{() => setIsEditing(\cf2 \strokec2 false\cf0 \strokec4 )\}\cb1 \
+\cb3                     >\cb1 \
+\cb3                       \cf5 \strokec5 Cancel\cf0 \cb1 \strokec4 \
+\cb3                     </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \
+\cb3                     <\cf5 \strokec5 Button\cf0 \cb1 \strokec4 \
+\cb3                       type=\cf6 \strokec6 "submit"\cf0 \cb1 \strokec4 \
+\cb3                       disabled=\{updateProfileMutation.isPending\}\cb1 \
+\cb3                       className=\cf6 \strokec6 "bg-gradient-to-r from-indigo-600 to-indigo-700"\cf0 \cb1 \strokec4 \
+\cb3                     >\cb1 \
+\cb3                       <\cf5 \strokec5 Save\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 mr-2"\cf0 \strokec4  />\cb1 \
+\cb3                       \{updateProfileMutation.isPending ? \cf6 \strokec6 "Saving..."\cf0 \strokec4  : \cf6 \strokec6 "Save Changes"\cf0 \strokec4 \}\cb1 \
+\cb3                     </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \
+\cb3                   </div>\cb1 \
+\cb3                 </form>\cb1 \
+\cb3               ) : (\cb1 \
+\cb3                 <div className=\cf6 \strokec6 "space-y-6"\cf0 \strokec4 >\cb1 \
+\cb3                   <div>\cb1 \
+\cb3                     <h4 className=\cf6 \strokec6 "text-sm font-medium text-slate-500 mb-2"\cf0 \strokec4 >\cf5 \strokec5 Full\cf0 \strokec4  \cf5 \strokec5 Name\cf0 \strokec4 </h4>\cb1 \
+\cb3                     <p className=\cf6 \strokec6 "text-slate-900"\cf0 \strokec4 >\{user.full_name || \cf6 \strokec6 "Not set"\cf0 \strokec4 \}</p>\cb1 \
+\cb3                   </div>\cb1 \
+\
+\cb3                   <div>\cb1 \
+\cb3                     <h4 className=\cf6 \strokec6 "text-sm font-medium text-slate-500 mb-2"\cf0 \strokec4 >\cf5 \strokec5 Email\cf0 \strokec4 </h4>\cb1 \
+\cb3                     <p className=\cf6 \strokec6 "text-slate-900"\cf0 \strokec4 >\{user.email\}</p>\cb1 \
+\cb3                   </div>\cb1 \
+\
+\cb3                   <div>\cb1 \
+\cb3                     <h4 className=\cf6 \strokec6 "text-sm font-medium text-slate-500 mb-2"\cf0 \strokec4 >\cf5 \strokec5 Phone\cf0 \strokec4 </h4>\cb1 \
+\cb3                     <p className=\cf6 \strokec6 "text-slate-900"\cf0 \strokec4 >\{user.phone || \cf6 \strokec6 "Not set"\cf0 \strokec4 \}</p>\cb1 \
+\cb3                   </div>\cb1 \
+\
+\cb3                   \{user.user_role === \cf6 \strokec6 "student"\cf0 \strokec4  && user.student_id && (\cb1 \
+\cb3                     <div>\cb1 \
+\cb3                       <h4 className=\cf6 \strokec6 "text-sm font-medium text-slate-500 mb-2"\cf0 \strokec4 >\cf5 \strokec5 Student\cf0 \strokec4  \cf5 \strokec5 ID\cf0 \strokec4 </h4>\cb1 \
+\cb3                       <p className=\cf6 \strokec6 "text-slate-900"\cf0 \strokec4 >\{user.student_id\}</p>\cb1 \
+\cb3                     </div>\cb1 \
+\cb3                   )\}\cb1 \
+\
+\cb3                   \{user.department && (\cb1 \
+\cb3                     <div>\cb1 \
+\cb3                       <h4 className=\cf6 \strokec6 "text-sm font-medium text-slate-500 mb-2"\cf0 \strokec4 >\cf5 \strokec5 Department\cf0 \strokec4 </h4>\cb1 \
+\cb3                       <p className=\cf6 \strokec6 "text-slate-900"\cf0 \strokec4 >\{user.department\}</p>\cb1 \
+\cb3                     </div>\cb1 \
+\cb3                   )\}\cb1 \
+\
+\cb3                   \{user.user_role === \cf6 \strokec6 "student"\cf0 \strokec4  && (\cb1 \
+\cb3                     <>\cb1 \
+\cb3                       \{user.level && (\cb1 \
+\cb3                         <div>\cb1 \
+\cb3                           <h4 className=\cf6 \strokec6 "text-sm font-medium text-slate-500 mb-2"\cf0 \strokec4 >\cf5 \strokec5 Level\cf0 \strokec4 </h4>\cb1 \
+\cb3                           <p className=\cf6 \strokec6 "text-slate-900"\cf0 \strokec4 >\{user.level\}</p>\cb1 \
+\cb3                         </div>\cb1 \
+\cb3                       )\}\cb1 \
+\
+\cb3                       \{user.specialization && (\cb1 \
+\cb3                         <div>\cb1 \
+\cb3                           <h4 className=\cf6 \strokec6 "text-sm font-medium text-slate-500 mb-2"\cf0 \strokec4 >\cf5 \strokec5 Specialization\cf0 \strokec4 </h4>\cb1 \
+\cb3                           <p className=\cf6 \strokec6 "text-slate-900"\cf0 \strokec4 >\{user.specialization\}</p>\cb1 \
+\cb3                         </div>\cb1 \
+\cb3                       )\}\cb1 \
+\cb3                     </>\cb1 \
+\cb3                   )\}\cb1 \
+\
+\cb3                   \{user.bio && (\cb1 \
+\cb3                     <div>\cb1 \
+\cb3                       <h4 className=\cf6 \strokec6 "text-sm font-medium text-slate-500 mb-2"\cf0 \strokec4 >\cf5 \strokec5 Bio\cf0 \strokec4 </h4>\cb1 \
+\cb3                       <p className=\cf6 \strokec6 "text-slate-900 whitespace-pre-wrap"\cf0 \strokec4 >\{user.bio\}</p>\cb1 \
+\cb3                     </div>\cb1 \
+\cb3                   )\}\cb1 \
+\cb3                 </div>\cb1 \
+\cb3               )\}\cb1 \
+\cb3             </\cf5 \strokec5 CardContent\cf0 \strokec4 >\cb1 \
+\cb3           </\cf5 \strokec5 Card\cf0 \strokec4 >\cb1 \
+\cb3         </div>\cb1 \
+\cb3       </div>\cb1 \
+\cb3     </div>\cb1 \
+\cb3   );\cb1 \
+\cb3 \}\cb1 \
+}

@@ -1,0 +1,121 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red255\green255\blue254;\red0\green0\blue0;
+\red14\green110\blue109;\red144\green1\blue18;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c100000;\cssrgb\c100000\c100000\c99608;\cssrgb\c0\c0\c0;
+\cssrgb\c0\c50196\c50196;\cssrgb\c63922\c8235\c8235;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs28 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 import\cf0 \strokec4  \cf5 \strokec5 React\cf0 \strokec4  \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "react"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Card\cf0 \strokec4 , \cf5 \strokec5 CardContent\cf0 \strokec4 , \cf5 \strokec5 CardHeader\cf0 \strokec4 , \cf5 \strokec5 CardTitle\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/card"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Button\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/button"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Badge\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/badge"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Calendar\cf0 \strokec4 , \cf5 \strokec5 Clock\cf0 \strokec4 , \cf5 \strokec5 MapPin\cf0 \strokec4 , \cf5 \strokec5 Video\cf0 \strokec4 , \cf5 \strokec5 CheckCircle2\cf0 \strokec4 , \cf5 \strokec5 XCircle\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "lucide-react"\cf0 \strokec4 ;\cb1 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ format, isPast \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "date-fns"\cf0 \strokec4 ;\cb1 \
+\
+\cf2 \cb3 \strokec2 const\cf0 \strokec4  statusColors = \{\cb1 \
+\cb3   pending: \cf6 \strokec6 "bg-amber-100 text-amber-700 border-amber-300"\cf0 \strokec4 ,\cb1 \
+\cb3   confirmed: \cf6 \strokec6 "bg-blue-100 text-blue-700 border-blue-300"\cf0 \strokec4 ,\cb1 \
+\cb3   completed: \cf6 \strokec6 "bg-emerald-100 text-emerald-700 border-emerald-300"\cf0 \strokec4 ,\cb1 \
+\cb3   cancelled: \cf6 \strokec6 "bg-red-100 text-red-700 border-red-300"\cf0 \cb1 \strokec4 \
+\cb3 \};\cb1 \
+\
+\cf2 \cb3 \strokec2 export\cf0 \strokec4  \cf2 \strokec2 default\cf0 \strokec4  \cf2 \strokec2 function\cf0 \strokec4  \cf5 \strokec5 MeetingCard\cf0 \strokec4 (\{ meeting, project, onUpdateStatus, user \}) \{\cb1 \
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  isVideoMeeting = meeting.location?.includes(\cf6 \strokec6 'http'\cf0 \strokec4 );\cb1 \
+\cb3   \cf2 \strokec2 const\cf0 \strokec4  isPastMeeting = isPast(\cf2 \strokec2 new\cf0 \strokec4  \cf5 \strokec5 Date\cf0 \strokec4 (meeting.scheduled_at));\cb1 \
+\
+\cb3   \cf2 \strokec2 return\cf0 \strokec4  (\cb1 \
+\cb3     <\cf5 \strokec5 Card\cf0 \strokec4  className=\cf6 \strokec6 "border-slate-200/60 shadow-xl shadow-slate-200/50 hover:shadow-2xl transition-shadow"\cf0 \strokec4 >\cb1 \
+\cb3       <\cf5 \strokec5 CardHeader\cf0 \strokec4  className=\cf6 \strokec6 "border-b border-slate-100"\cf0 \strokec4 >\cb1 \
+\cb3         <div className=\cf6 \strokec6 "flex justify-between items-start"\cf0 \strokec4 >\cb1 \
+\cb3           <div className=\cf6 \strokec6 "flex-1"\cf0 \strokec4 >\cb1 \
+\cb3             <\cf5 \strokec5 CardTitle\cf0 \strokec4  className=\cf6 \strokec6 "text-lg font-bold text-slate-900 mb-2"\cf0 \strokec4 >\cb1 \
+\cb3               \{meeting.title\}\cb1 \
+\cb3             </\cf5 \strokec5 CardTitle\cf0 \strokec4 >\cb1 \
+\cb3             <p className=\cf6 \strokec6 "text-sm text-slate-600"\cf0 \strokec4 >\{project?.title\}</p>\cb1 \
+\cb3           </div>\cb1 \
+\cb3           <\cf5 \strokec5 Badge\cf0 \strokec4  className=\{\cf6 \strokec6 `\cf0 \strokec4 $\{statusColors[meeting.status]\}\cf6 \strokec6  border font-medium`\cf0 \strokec4 \}>\cb1 \
+\cb3             \{meeting.status\}\cb1 \
+\cb3           </\cf5 \strokec5 Badge\cf0 \strokec4 >\cb1 \
+\cb3         </div>\cb1 \
+\cb3       </\cf5 \strokec5 CardHeader\cf0 \strokec4 >\cb1 \
+\cb3       <\cf5 \strokec5 CardContent\cf0 \strokec4  className=\cf6 \strokec6 "p-6"\cf0 \strokec4 >\cb1 \
+\cb3         <div className=\cf6 \strokec6 "space-y-3 mb-4"\cf0 \strokec4 >\cb1 \
+\cb3           <div className=\cf6 \strokec6 "flex items-center gap-2 text-sm text-slate-600"\cf0 \strokec4 >\cb1 \
+\cb3             <\cf5 \strokec5 Calendar\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4"\cf0 \strokec4  />\cb1 \
+\cb3             <span>\{format(\cf2 \strokec2 new\cf0 \strokec4  \cf5 \strokec5 Date\cf0 \strokec4 (meeting.scheduled_at), \cf6 \strokec6 "EEEE, MMMM d, yyyy"\cf0 \strokec4 )\}</span>\cb1 \
+\cb3           </div>\cb1 \
+\cb3           <div className=\cf6 \strokec6 "flex items-center gap-2 text-sm text-slate-600"\cf0 \strokec4 >\cb1 \
+\cb3             <\cf5 \strokec5 Clock\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4"\cf0 \strokec4  />\cb1 \
+\cb3             <span>\cb1 \
+\cb3               \{format(\cf2 \strokec2 new\cf0 \strokec4  \cf5 \strokec5 Date\cf0 \strokec4 (meeting.scheduled_at), \cf6 \strokec6 "h:mm a"\cf0 \strokec4 )\} (\{meeting.duration_minutes\} min)\cb1 \
+\cb3             </span>\cb1 \
+\cb3           </div>\cb1 \
+\cb3           \{meeting.location && (\cb1 \
+\cb3             <div className=\cf6 \strokec6 "flex items-center gap-2 text-sm text-slate-600"\cf0 \strokec4 >\cb1 \
+\cb3               \{isVideoMeeting ? <\cf5 \strokec5 Video\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4"\cf0 \strokec4  /> : <\cf5 \strokec5 MapPin\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4"\cf0 \strokec4  />\}\cb1 \
+\cb3               \{isVideoMeeting ? (\cb1 \
+\cb3                 <a href=\{meeting.location\} target=\cf6 \strokec6 "_blank"\cf0 \strokec4  rel=\cf6 \strokec6 "noopener noreferrer"\cf0 \strokec4  className=\cf6 \strokec6 "text-indigo-600 hover:underline"\cf0 \strokec4 >\cb1 \
+\cb3                   \cf5 \strokec5 Join\cf0 \strokec4  \cf5 \strokec5 Video\cf0 \strokec4  \cf5 \strokec5 Meeting\cf0 \cb1 \strokec4 \
+\cb3                 </a>\cb1 \
+\cb3               ) : (\cb1 \
+\cb3                 <span>\{meeting.location\}</span>\cb1 \
+\cb3               )\}\cb1 \
+\cb3             </div>\cb1 \
+\cb3           )\}\cb1 \
+\cb3         </div>\cb1 \
+\
+\cb3         \{meeting.agenda && (\cb1 \
+\cb3           <div className=\cf6 \strokec6 "p-3 bg-slate-50 rounded-lg mb-4"\cf0 \strokec4 >\cb1 \
+\cb3             <p className=\cf6 \strokec6 "text-xs font-medium text-slate-700 mb-1"\cf0 \strokec4 >\cf5 \strokec5 Agenda\cf0 \strokec4 :</p>\cb1 \
+\cb3             <p className=\cf6 \strokec6 "text-sm text-slate-600"\cf0 \strokec4 >\{meeting.agenda\}</p>\cb1 \
+\cb3           </div>\cb1 \
+\cb3         )\}\cb1 \
+\
+\cb3         \{meeting.notes && (\cb1 \
+\cb3           <div className=\cf6 \strokec6 "p-3 bg-slate-50 rounded-lg mb-4"\cf0 \strokec4 >\cb1 \
+\cb3             <p className=\cf6 \strokec6 "text-xs font-medium text-slate-700 mb-1"\cf0 \strokec4 >\cf5 \strokec5 Meeting\cf0 \strokec4  \cf5 \strokec5 Notes\cf0 \strokec4 :</p>\cb1 \
+\cb3             <p className=\cf6 \strokec6 "text-sm text-slate-600"\cf0 \strokec4 >\{meeting.notes\}</p>\cb1 \
+\cb3           </div>\cb1 \
+\cb3         )\}\cb1 \
+\
+\cb3         \{user?.user_role === \cf6 \strokec6 "supervisor"\cf0 \strokec4  && !isPastMeeting && meeting.status === \cf6 \strokec6 'pending'\cf0 \strokec4  && (\cb1 \
+\cb3           <div className=\cf6 \strokec6 "flex gap-2 pt-4 border-t"\cf0 \strokec4 >\cb1 \
+\cb3             <\cf5 \strokec5 Button\cf0 \cb1 \strokec4 \
+\cb3               size=\cf6 \strokec6 "sm"\cf0 \cb1 \strokec4 \
+\cb3               onClick=\{() => onUpdateStatus(meeting.id, \cf6 \strokec6 'confirmed'\cf0 \strokec4 )\}\cb1 \
+\cb3               className=\cf6 \strokec6 "flex-1 bg-blue-600 hover:bg-blue-700"\cf0 \cb1 \strokec4 \
+\cb3             >\cb1 \
+\cb3               <\cf5 \strokec5 CheckCircle2\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 mr-1"\cf0 \strokec4  />\cb1 \
+\cb3               \cf5 \strokec5 Confirm\cf0 \cb1 \strokec4 \
+\cb3             </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \
+\cb3             <\cf5 \strokec5 Button\cf0 \cb1 \strokec4 \
+\cb3               size=\cf6 \strokec6 "sm"\cf0 \cb1 \strokec4 \
+\cb3               variant=\cf6 \strokec6 "outline"\cf0 \cb1 \strokec4 \
+\cb3               onClick=\{() => onUpdateStatus(meeting.id, \cf6 \strokec6 'cancelled'\cf0 \strokec4 )\}\cb1 \
+\cb3               className=\cf6 \strokec6 "flex-1 text-red-600 hover:bg-red-50"\cf0 \cb1 \strokec4 \
+\cb3             >\cb1 \
+\cb3               <\cf5 \strokec5 XCircle\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 mr-1"\cf0 \strokec4  />\cb1 \
+\cb3               \cf5 \strokec5 Cancel\cf0 \cb1 \strokec4 \
+\cb3             </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \
+\cb3           </div>\cb1 \
+\cb3         )\}\cb1 \
+\
+\cb3         \{user?.user_role === \cf6 \strokec6 "supervisor"\cf0 \strokec4  && isPastMeeting && meeting.status !== \cf6 \strokec6 'completed'\cf0 \strokec4  && meeting.status !== \cf6 \strokec6 'cancelled'\cf0 \strokec4  && (\cb1 \
+\cb3           <\cf5 \strokec5 Button\cf0 \cb1 \strokec4 \
+\cb3             size=\cf6 \strokec6 "sm"\cf0 \cb1 \strokec4 \
+\cb3             onClick=\{() => onUpdateStatus(meeting.id, \cf6 \strokec6 'completed'\cf0 \strokec4 )\}\cb1 \
+\cb3             className=\cf6 \strokec6 "w-full bg-emerald-600 hover:bg-emerald-700"\cf0 \cb1 \strokec4 \
+\cb3           >\cb1 \
+\cb3             <\cf5 \strokec5 CheckCircle2\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 mr-2"\cf0 \strokec4  />\cb1 \
+\cb3             \cf5 \strokec5 Mark\cf0 \strokec4  as \cf5 \strokec5 Completed\cf0 \cb1 \strokec4 \
+\cb3           </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \
+\cb3         )\}\cb1 \
+\cb3       </\cf5 \strokec5 CardContent\cf0 \strokec4 >\cb1 \
+\cb3     </\cf5 \strokec5 Card\cf0 \strokec4 >\cb1 \
+\cb3   );\cb1 \
+\cb3 \}\cb1 \
+}

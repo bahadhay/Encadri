@@ -1,0 +1,312 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red255\green255\blue254;\red0\green0\blue0;
+\red14\green110\blue109;\red144\green1\blue18;\red19\green118\blue70;\red15\green112\blue1;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c100000;\cssrgb\c100000\c100000\c99608;\cssrgb\c0\c0\c0;
+\cssrgb\c0\c50196\c50196;\cssrgb\c63922\c8235\c8235;\cssrgb\c3529\c52549\c34510;\cssrgb\c0\c50196\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs28 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 import\cf0 \strokec4  \cf5 \strokec5 React\cf0 \strokec4 , \{ useState \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "react"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Card\cf0 \strokec4 , \cf5 \strokec5 CardContent\cf0 \strokec4 , \cf5 \strokec5 CardHeader\cf0 \strokec4 , \cf5 \strokec5 CardTitle\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/card"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Badge\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/badge"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Button\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/button"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Progress\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/progress"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Input\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/input"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Calendar\cf0 \strokec4 , \cf5 \strokec5 User\cf0 \strokec4 , \cf5 \strokec5 Building2\cf0 \strokec4 , \cf5 \strokec5 Target\cf0 \strokec4 , \cf5 \strokec5 Code\cf0 \strokec4 , \cf5 \strokec5 TrendingUp\cf0 \strokec4 , \cf5 \strokec5 Edit\cf0 \strokec4 , \cf5 \strokec5 Check\cf0 \strokec4 , \cf5 \strokec5 X\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "lucide-react"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ format \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "date-fns"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ useMutation, useQueryClient \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@tanstack/react-query"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ base44 \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/api/base44Client"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ toast \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "sonner"\cf0 \strokec4 ;\cb1 \strokec4 \
+\
+\cf2 \cb3 \strokec2 export\cf0 \strokec4  \cf2 \strokec2 default\cf0 \strokec4  \cf2 \strokec2 function\cf0 \strokec4  \cf5 \strokec5 ProjectOverview\cf0 \strokec4 (\{ project, user \}) \{\cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  [isEditingProgress, setIsEditingProgress] = useState(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  [newProgress, setNewProgress] = useState(project.progress_percentage || \cf7 \strokec7 0\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4   \cb1 \strokec4 \
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  queryClient = useQueryClient();\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  updateProgressMutation = useMutation(\{\cb1 \strokec4 \
+\cb3 \strokec4     mutationFn: \cf2 \strokec2 async\cf0 \strokec4  (progressValue) => \{\cb1 \strokec4 \
+\cb3 \strokec4       \cf8 \strokec8 // Update project progress\cf0 \cb1 \strokec4 \
+\cb3 \strokec4       \cf2 \strokec2 await\cf0 \strokec4  base44.entities.\cf5 \strokec5 Project\cf0 \strokec4 .update(project.id, \{ progress_percentage: progressValue \});\cb1 \strokec4 \
+\cb3 \strokec4       \cb1 \strokec4 \
+\cb3 \strokec4       \cf8 \strokec8 // Create notification for the student\cf0 \cb1 \strokec4 \
+\cb3 \strokec4       \cf2 \strokec2 await\cf0 \strokec4  base44.entities.\cf5 \strokec5 Notification\cf0 \strokec4 .create(\{\cb1 \strokec4 \
+\cb3 \strokec4         user_email: project.student_email,\cb1 \strokec4 \
+\cb3 \strokec4         title: \cf6 \strokec6 "Project Progress Updated"\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4         message: \cf6 \strokec6 `Your project "\cf0 \strokec4 $\{project.title\}\cf6 \strokec6 " progress has been updated to \cf0 \strokec4 $\{progressValue\}\cf6 \strokec6 % by \cf0 \strokec4 $\{user?.full_name || user?.email\}\cf6 \strokec6 `\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4         type: \cf6 \strokec6 "project_status"\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4         priority: progressValue === \cf7 \strokec7 100\cf0 \strokec4  ? \cf6 \strokec6 "high"\cf0 \strokec4  : \cf6 \strokec6 "normal"\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4         link: \cf6 \strokec6 `/ProjectDetails?id=\cf0 \strokec4 $\{project.id\}\cf6 \strokec6 `\cf0 \cb1 \strokec4 \
+\cb3 \strokec4       \});\cb1 \strokec4 \
+\
+\cb3 \strokec4       \cf8 \strokec8 // Create notification for the supervisor\cf0 \cb1 \strokec4 \
+\cb3 \strokec4       \cf2 \strokec2 await\cf0 \strokec4  base44.entities.\cf5 \strokec5 Notification\cf0 \strokec4 .create(\{\cb1 \strokec4 \
+\cb3 \strokec4         user_email: project.supervisor_email,\cb1 \strokec4 \
+\cb3 \strokec4         title: \cf6 \strokec6 "Progress Updated"\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4         message: \cf6 \strokec6 `You updated the progress of "\cf0 \strokec4 $\{project.title\}\cf6 \strokec6 " to \cf0 \strokec4 $\{progressValue\}\cf6 \strokec6 %`\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4         type: \cf6 \strokec6 "project_status"\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4         priority: \cf6 \strokec6 "low"\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4         link: \cf6 \strokec6 `/ProjectDetails?id=\cf0 \strokec4 $\{project.id\}\cf6 \strokec6 `\cf0 \cb1 \strokec4 \
+\cb3 \strokec4       \});\cb1 \strokec4 \
+\cb3 \strokec4     \},\cb1 \strokec4 \
+\cb3 \strokec4     onSuccess: () => \{\cb1 \strokec4 \
+\cb3 \strokec4       queryClient.invalidateQueries(\{ queryKey: [\cf6 \strokec6 'project'\cf0 \strokec4 , project.id] \});\cb1 \strokec4 \
+\cb3 \strokec4       queryClient.invalidateQueries(\{ queryKey: [\cf6 \strokec6 'projects'\cf0 \strokec4 ] \});\cb1 \strokec4 \
+\cb3 \strokec4       queryClient.invalidateQueries(\{ queryKey: [\cf6 \strokec6 'notifications'\cf0 \strokec4 ] \});\cb1 \strokec4 \
+\cb3 \strokec4       setIsEditingProgress(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4       toast.success(\cf6 \strokec6 "Progress updated successfully"\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4     \},\cb1 \strokec4 \
+\cb3 \strokec4     onError: () => \{\cb1 \strokec4 \
+\cb3 \strokec4       toast.error(\cf6 \strokec6 "Failed to update progress"\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4     \}\cb1 \strokec4 \
+\cb3 \strokec4   \});\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  handleSaveProgress = () => \{\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 const\cf0 \strokec4  value = \cf5 \strokec5 Math\cf0 \strokec4 .max(\cf7 \strokec7 0\cf0 \strokec4 , \cf5 \strokec5 Math\cf0 \strokec4 .min(\cf7 \strokec7 100\cf0 \strokec4 , \cf5 \strokec5 Number\cf0 \strokec4 (newProgress)));\cb1 \strokec4 \
+\cb3 \strokec4     updateProgressMutation.mutate(value);\cb1 \strokec4 \
+\cb3 \strokec4   \};\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  handleCancelEdit = () => \{\cb1 \strokec4 \
+\cb3 \strokec4     setNewProgress(project.progress_percentage || \cf7 \strokec7 0\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4     setIsEditingProgress(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4   \};\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf8 \strokec8 // Couleurs de la progress bar selon le pourcentage\cf0 \cb1 \strokec4 \
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  getProgressColor = (percentage) => \{\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 if\cf0 \strokec4  (percentage >= \cf7 \strokec7 75\cf0 \strokec4 ) \cf2 \strokec2 return\cf0 \strokec4  \cf6 \strokec6 "bg-emerald-500"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 if\cf0 \strokec4  (percentage >= \cf7 \strokec7 50\cf0 \strokec4 ) \cf2 \strokec2 return\cf0 \strokec4  \cf6 \strokec6 "bg-blue-500"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 if\cf0 \strokec4  (percentage >= \cf7 \strokec7 25\cf0 \strokec4 ) \cf2 \strokec2 return\cf0 \strokec4  \cf6 \strokec6 "bg-amber-500"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 return\cf0 \strokec4  \cf6 \strokec6 "bg-slate-400"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4   \};\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  getProgressBgColor = (percentage) => \{\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 if\cf0 \strokec4  (percentage >= \cf7 \strokec7 75\cf0 \strokec4 ) \cf2 \strokec2 return\cf0 \strokec4  \cf6 \strokec6 "bg-emerald-100"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 if\cf0 \strokec4  (percentage >= \cf7 \strokec7 50\cf0 \strokec4 ) \cf2 \strokec2 return\cf0 \strokec4  \cf6 \strokec6 "bg-blue-100"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 if\cf0 \strokec4  (percentage >= \cf7 \strokec7 25\cf0 \strokec4 ) \cf2 \strokec2 return\cf0 \strokec4  \cf6 \strokec6 "bg-amber-100"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 return\cf0 \strokec4  \cf6 \strokec6 "bg-slate-100"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4   \};\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  getProgressTextColor = (percentage) => \{\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 if\cf0 \strokec4  (percentage >= \cf7 \strokec7 75\cf0 \strokec4 ) \cf2 \strokec2 return\cf0 \strokec4  \cf6 \strokec6 "text-emerald-600"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 if\cf0 \strokec4  (percentage >= \cf7 \strokec7 50\cf0 \strokec4 ) \cf2 \strokec2 return\cf0 \strokec4  \cf6 \strokec6 "text-blue-600"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 if\cf0 \strokec4  (percentage >= \cf7 \strokec7 25\cf0 \strokec4 ) \cf2 \strokec2 return\cf0 \strokec4  \cf6 \strokec6 "text-amber-600"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 return\cf0 \strokec4  \cf6 \strokec6 "text-slate-600"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4   \};\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  progress = project.progress_percentage || \cf7 \strokec7 0\cf0 \strokec4 ;\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 return\cf0 \strokec4  (\cb1 \strokec4 \
+\cb3 \strokec4     <div className=\cf6 \strokec6 "grid lg:grid-cols-3 gap-6"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4       <div className=\cf6 \strokec6 "lg:col-span-2 space-y-6"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4         <\cf5 \strokec5 Card\cf0 \strokec4  className=\cf6 \strokec6 "border-slate-200/60 shadow-xl shadow-slate-200/50"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           <\cf5 \strokec5 CardHeader\cf0 \strokec4  className=\cf6 \strokec6 "border-b border-slate-100"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 CardTitle\cf0 \strokec4  className=\cf6 \strokec6 "text-xl font-bold text-slate-900"\cf0 \strokec4 >\cf5 \strokec5 Description\cf0 \strokec4 </\cf5 \strokec5 CardTitle\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           </\cf5 \strokec5 CardHeader\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           <\cf5 \strokec5 CardContent\cf0 \strokec4  className=\cf6 \strokec6 "p-6"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             <p className=\cf6 \strokec6 "text-slate-600 leading-relaxed"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               \{project.description || \cf6 \strokec6 "No description provided."\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4             </p>\cb1 \strokec4 \
+\cb3 \strokec4           </\cf5 \strokec5 CardContent\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4         </\cf5 \strokec5 Card\cf0 \strokec4 >\cb1 \strokec4 \
+\
+\cb3 \strokec4         \{project.objectives && project.objectives.length > \cf7 \strokec7 0\cf0 \strokec4  && (\cb1 \strokec4 \
+\cb3 \strokec4           <\cf5 \strokec5 Card\cf0 \strokec4  className=\cf6 \strokec6 "border-slate-200/60 shadow-xl shadow-slate-200/50"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 CardHeader\cf0 \strokec4  className=\cf6 \strokec6 "border-b border-slate-100"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 CardTitle\cf0 \strokec4  className=\cf6 \strokec6 "text-xl font-bold text-slate-900 flex items-center gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <\cf5 \strokec5 Target\cf0 \strokec4  className=\cf6 \strokec6 "w-5 h-5"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                 \cf5 \strokec5 Objectives\cf0 \cb1 \strokec4 \
+\cb3 \strokec4               </\cf5 \strokec5 CardTitle\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             </\cf5 \strokec5 CardHeader\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 CardContent\cf0 \strokec4  className=\cf6 \strokec6 "p-6"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <ul className=\cf6 \strokec6 "space-y-3"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 \{project.objectives.map((objective, index) => (\cb1 \strokec4 \
+\cb3 \strokec4                   <li key=\{index\} className=\cf6 \strokec6 "flex items-start gap-3"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                     <div className=\cf6 \strokec6 "w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0 mt-0.5"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                       <span className=\cf6 \strokec6 "text-xs font-semibold text-indigo-600"\cf0 \strokec4 >\{index + \cf7 \strokec7 1\cf0 \strokec4 \}</span>\cb1 \strokec4 \
+\cb3 \strokec4                     </div>\cb1 \strokec4 \
+\cb3 \strokec4                     <p className=\cf6 \strokec6 "text-slate-600 flex-1"\cf0 \strokec4 >\{objective\}</p>\cb1 \strokec4 \
+\cb3 \strokec4                   </li>\cb1 \strokec4 \
+\cb3 \strokec4                 ))\}\cb1 \strokec4 \
+\cb3 \strokec4               </ul>\cb1 \strokec4 \
+\cb3 \strokec4             </\cf5 \strokec5 CardContent\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           </\cf5 \strokec5 Card\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4         )\}\cb1 \strokec4 \
+\
+\cb3 \strokec4         \{project.technologies && project.technologies.length > \cf7 \strokec7 0\cf0 \strokec4  && (\cb1 \strokec4 \
+\cb3 \strokec4           <\cf5 \strokec5 Card\cf0 \strokec4  className=\cf6 \strokec6 "border-slate-200/60 shadow-xl shadow-slate-200/50"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 CardHeader\cf0 \strokec4  className=\cf6 \strokec6 "border-b border-slate-100"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 CardTitle\cf0 \strokec4  className=\cf6 \strokec6 "text-xl font-bold text-slate-900 flex items-center gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <\cf5 \strokec5 Code\cf0 \strokec4  className=\cf6 \strokec6 "w-5 h-5"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                 \cf5 \strokec5 Technologies\cf0 \cb1 \strokec4 \
+\cb3 \strokec4               </\cf5 \strokec5 CardTitle\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             </\cf5 \strokec5 CardHeader\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 CardContent\cf0 \strokec4  className=\cf6 \strokec6 "p-6"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "flex flex-wrap gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 \{project.technologies.map((tech, index) => (\cb1 \strokec4 \
+\cb3 \strokec4                   <\cf5 \strokec5 Badge\cf0 \strokec4  key=\{index\} variant=\cf6 \strokec6 "secondary"\cf0 \strokec4  className=\cf6 \strokec6 "bg-slate-100 text-slate-700 border border-slate-300"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                     \{tech\}\cb1 \strokec4 \
+\cb3 \strokec4                   </\cf5 \strokec5 Badge\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 ))\}\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4             </\cf5 \strokec5 CardContent\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           </\cf5 \strokec5 Card\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4         )\}\cb1 \strokec4 \
+\cb3 \strokec4       </div>\cb1 \strokec4 \
+\
+\cb3 \strokec4       <div className=\cf6 \strokec6 "space-y-6"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4         <\cf5 \strokec5 Card\cf0 \strokec4  className=\cf6 \strokec6 "border-slate-200/60 shadow-xl shadow-slate-200/50"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           <\cf5 \strokec5 CardHeader\cf0 \strokec4  className=\cf6 \strokec6 "border-b border-slate-100"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 CardTitle\cf0 \strokec4  className=\cf6 \strokec6 "text-xl font-bold text-slate-900"\cf0 \strokec4 >\cf5 \strokec5 Project\cf0 \strokec4  \cf5 \strokec5 Details\cf0 \strokec4 </\cf5 \strokec5 CardTitle\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           </\cf5 \strokec5 CardHeader\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           <\cf5 \strokec5 CardContent\cf0 \strokec4  className=\cf6 \strokec6 "p-6 space-y-4"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             \{\cf8 \strokec8 /* Enhanced Progress Section */\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4             <div className=\{\cf6 \strokec6 `p-4 rounded-lg \cf0 \strokec4 $\{getProgressBgColor(progress)\}\cf6 \strokec6  border border-opacity-50`\cf0 \strokec4 \}>\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "flex justify-between items-center mb-3"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <div className=\cf6 \strokec6 "flex items-center gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <\cf5 \strokec5 TrendingUp\cf0 \strokec4  className=\{\cf6 \strokec6 `w-5 h-5 \cf0 \strokec4 $\{getProgressTextColor(progress)\}\cf6 \strokec6 `\cf0 \strokec4 \} />\cb1 \strokec4 \
+\cb3 \strokec4                   <span className=\cf6 \strokec6 "text-sm font-semibold text-slate-700"\cf0 \strokec4 >\cf5 \strokec5 Progress\cf0 \strokec4 </span>\cb1 \strokec4 \
+\cb3 \strokec4                 </div>\cb1 \strokec4 \
+\cb3 \strokec4                 <div className=\cf6 \strokec6 "flex items-center gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   \{isEditingProgress ? (\cb1 \strokec4 \
+\cb3 \strokec4                     <>\cb1 \strokec4 \
+\cb3 \strokec4                       <\cf5 \strokec5 Input\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                         type=\cf6 \strokec6 "number"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                         min=\cf6 \strokec6 "0"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                         max=\cf6 \strokec6 "100"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                         value=\{newProgress\}\cb1 \strokec4 \
+\cb3 \strokec4                         onChange=\{(e) => setNewProgress(e.target.value)\}\cb1 \strokec4 \
+\cb3 \strokec4                         className=\cf6 \strokec6 "w-20 h-8 text-center"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                         disabled=\{updateProgressMutation.isPending\}\cb1 \strokec4 \
+\cb3 \strokec4                       />\cb1 \strokec4 \
+\cb3 \strokec4                       <\cf5 \strokec5 Button\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                         size=\cf6 \strokec6 "icon"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                         className=\cf6 \strokec6 "h-8 w-8 bg-emerald-600 hover:bg-emerald-700"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                         onClick=\{handleSaveProgress\}\cb1 \strokec4 \
+\cb3 \strokec4                         disabled=\{updateProgressMutation.isPending\}\cb1 \strokec4 \
+\cb3 \strokec4                       >\cb1 \strokec4 \
+\cb3 \strokec4                         <\cf5 \strokec5 Check\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                       </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                       <\cf5 \strokec5 Button\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                         size=\cf6 \strokec6 "icon"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                         variant=\cf6 \strokec6 "outline"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                         className=\cf6 \strokec6 "h-8 w-8"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                         onClick=\{handleCancelEdit\}\cb1 \strokec4 \
+\cb3 \strokec4                         disabled=\{updateProgressMutation.isPending\}\cb1 \strokec4 \
+\cb3 \strokec4                       >\cb1 \strokec4 \
+\cb3 \strokec4                         <\cf5 \strokec5 X\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                       </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                     </>\cb1 \strokec4 \
+\cb3 \strokec4                   ) : (\cb1 \strokec4 \
+\cb3 \strokec4                     <>\cb1 \strokec4 \
+\cb3 \strokec4                       <span className=\{\cf6 \strokec6 `text-2xl font-bold \cf0 \strokec4 $\{getProgressTextColor(progress)\}\cf6 \strokec6 `\cf0 \strokec4 \}>\cb1 \strokec4 \
+\cb3 \strokec4                         \{progress\}%\cb1 \strokec4 \
+\cb3 \strokec4                       </span>\cb1 \strokec4 \
+\cb3 \strokec4                       \{user?.user_role === \cf6 \strokec6 "supervisor"\cf0 \strokec4  && (\cb1 \strokec4 \
+\cb3 \strokec4                         <\cf5 \strokec5 Button\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                           size=\cf6 \strokec6 "icon"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                           variant=\cf6 \strokec6 "ghost"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                           className=\cf6 \strokec6 "h-8 w-8"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                           onClick=\{() => setIsEditingProgress(\cf2 \strokec2 true\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4                         >\cb1 \strokec4 \
+\cb3 \strokec4                           <\cf5 \strokec5 Edit\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                         </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                       )\}\cb1 \strokec4 \
+\cb3 \strokec4                     </>\cb1 \strokec4 \
+\cb3 \strokec4                   )\}\cb1 \strokec4 \
+\cb3 \strokec4                 </div>\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4               \cb1 \strokec4 \
+\cb3 \strokec4               \{\cf8 \strokec8 /* Progress Bar avec animation */\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "relative h-3 bg-white/50 rounded-full overflow-hidden shadow-inner mb-3"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <div \cb1 \strokec4 \
+\cb3 \strokec4                   className=\{\cf6 \strokec6 `h-full \cf0 \strokec4 $\{getProgressColor(progress)\}\cf6 \strokec6  transition-all duration-500 ease-out rounded-full shadow-sm`\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4                   style=\{\{ width: \cf6 \strokec6 `\cf0 \strokec4 $\{progress\}\cf6 \strokec6 %`\cf0 \strokec4  \}\}\cb1 \strokec4 \
+\cb3 \strokec4                 >\cb1 \strokec4 \
+\cb3 \strokec4                   \{progress > \cf7 \strokec7 10\cf0 \strokec4  && (\cb1 \strokec4 \
+\cb3 \strokec4                     <div className=\cf6 \strokec6 "absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                   )\}\cb1 \strokec4 \
+\cb3 \strokec4                 </div>\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4               \cb1 \strokec4 \
+\cb3 \strokec4               \{\cf8 \strokec8 /* Status message */\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4               <p className=\cf6 \strokec6 "text-xs text-slate-600 font-medium text-center"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 \{progress === \cf7 \strokec7 0\cf0 \strokec4  && \cf6 \strokec6 "Just started"\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4                 \{progress > \cf7 \strokec7 0\cf0 \strokec4  && progress < \cf7 \strokec7 25\cf0 \strokec4  && \cf6 \strokec6 "Getting started"\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4                 \{progress >= \cf7 \strokec7 25\cf0 \strokec4  && progress < \cf7 \strokec7 50\cf0 \strokec4  && \cf6 \strokec6 "Making progress"\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4                 \{progress >= \cf7 \strokec7 50\cf0 \strokec4  && progress < \cf7 \strokec7 75\cf0 \strokec4  && \cf6 \strokec6 "Halfway there"\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4                 \{progress >= \cf7 \strokec7 75\cf0 \strokec4  && progress < \cf7 \strokec7 100\cf0 \strokec4  && \cf6 \strokec6 "Almost done"\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4                 \{progress === \cf7 \strokec7 100\cf0 \strokec4  && \cf6 \strokec6 "Completed!"\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4               </p>\cb1 \strokec4 \
+\cb3 \strokec4             </div>\cb1 \strokec4 \
+\
+\cb3 \strokec4             <div className=\cf6 \strokec6 "pt-4 border-t border-slate-200"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "flex items-center gap-2 mb-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <\cf5 \strokec5 User\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 text-slate-400"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                 <p className=\cf6 \strokec6 "text-sm font-medium text-slate-600"\cf0 \strokec4 >\cf5 \strokec5 Student\cf0 \strokec4 </p>\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4               <p className=\cf6 \strokec6 "text-slate-900 font-semibold"\cf0 \strokec4 >\{project.student_name || project.student_email\}</p>\cb1 \strokec4 \
+\cb3 \strokec4               <p className=\cf6 \strokec6 "text-sm text-slate-500"\cf0 \strokec4 >\{project.student_email\}</p>\cb1 \strokec4 \
+\cb3 \strokec4             </div>\cb1 \strokec4 \
+\
+\cb3 \strokec4             <div className=\cf6 \strokec6 "pt-4 border-t border-slate-200"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "flex items-center gap-2 mb-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <\cf5 \strokec5 User\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 text-slate-400"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                 <p className=\cf6 \strokec6 "text-sm font-medium text-slate-600"\cf0 \strokec4 >\cf5 \strokec5 Supervisor\cf0 \strokec4 </p>\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4               <p className=\cf6 \strokec6 "text-slate-900 font-semibold"\cf0 \strokec4 >\{project.supervisor_name || project.supervisor_email\}</p>\cb1 \strokec4 \
+\cb3 \strokec4               <p className=\cf6 \strokec6 "text-sm text-slate-500"\cf0 \strokec4 >\{project.supervisor_email\}</p>\cb1 \strokec4 \
+\cb3 \strokec4             </div>\cb1 \strokec4 \
+\
+\cb3 \strokec4             \{project.company && (\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "pt-4 border-t border-slate-200"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <div className=\cf6 \strokec6 "flex items-center gap-2 mb-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <\cf5 \strokec5 Building2\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 text-slate-400"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                   <p className=\cf6 \strokec6 "text-sm font-medium text-slate-600"\cf0 \strokec4 >\cf5 \strokec5 Company\cf0 \strokec4 </p>\cb1 \strokec4 \
+\cb3 \strokec4                 </div>\cb1 \strokec4 \
+\cb3 \strokec4                 <p className=\cf6 \strokec6 "text-slate-900 font-semibold"\cf0 \strokec4 >\{project.company\}</p>\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4             )\}\cb1 \strokec4 \
+\
+\cb3 \strokec4             \{project.start_date && (\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "pt-4 border-t border-slate-200"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <div className=\cf6 \strokec6 "flex items-center gap-2 mb-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <\cf5 \strokec5 Calendar\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 text-slate-400"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                   <p className=\cf6 \strokec6 "text-sm font-medium text-slate-600"\cf0 \strokec4 >\cf5 \strokec5 Start\cf0 \strokec4  \cf5 \strokec5 Date\cf0 \strokec4 </p>\cb1 \strokec4 \
+\cb3 \strokec4                 </div>\cb1 \strokec4 \
+\cb3 \strokec4                 <p className=\cf6 \strokec6 "text-slate-900 font-semibold"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   \{format(\cf2 \strokec2 new\cf0 \strokec4  \cf5 \strokec5 Date\cf0 \strokec4 (project.start_date), \cf6 \strokec6 "MMMM d, yyyy"\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4                 </p>\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4             )\}\cb1 \strokec4 \
+\
+\cb3 \strokec4             \{project.end_date && (\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "pt-4 border-t border-slate-200"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <div className=\cf6 \strokec6 "flex items-center gap-2 mb-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <\cf5 \strokec5 Calendar\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 text-slate-400"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                   <p className=\cf6 \strokec6 "text-sm font-medium text-slate-600"\cf0 \strokec4 >\cf5 \strokec5 End\cf0 \strokec4  \cf5 \strokec5 Date\cf0 \strokec4 </p>\cb1 \strokec4 \
+\cb3 \strokec4                 </div>\cb1 \strokec4 \
+\cb3 \strokec4                 <p className=\cf6 \strokec6 "text-slate-900 font-semibold"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   \{format(\cf2 \strokec2 new\cf0 \strokec4  \cf5 \strokec5 Date\cf0 \strokec4 (project.end_date), \cf6 \strokec6 "MMMM d, yyyy"\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4                 </p>\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4             )\}\cb1 \strokec4 \
+\
+\cb3 \strokec4             \{project.final_grade && (\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "pt-4 border-t border-slate-200"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <div className=\cf6 \strokec6 "flex items-center gap-2 mb-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <p className=\cf6 \strokec6 "text-sm font-medium text-slate-600"\cf0 \strokec4 >\cf5 \strokec5 Final\cf0 \strokec4  \cf5 \strokec5 Grade\cf0 \strokec4 </p>\cb1 \strokec4 \
+\cb3 \strokec4                 </div>\cb1 \strokec4 \
+\cb3 \strokec4                 <p className=\cf6 \strokec6 "text-3xl font-bold text-indigo-600"\cf0 \strokec4 >\{project.final_grade\}/\cf7 \strokec7 20\cf0 \strokec4 </p>\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4             )\}\cb1 \strokec4 \
+\cb3 \strokec4           </\cf5 \strokec5 CardContent\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4         </\cf5 \strokec5 Card\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4       </div>\cb1 \strokec4 \
+\cb3 \strokec4     </div>\cb1 \strokec4 \
+\cb3 \strokec4   );\cb1 \strokec4 \
+\cb3 \strokec4 \}\cb1 \strokec4 \
+}

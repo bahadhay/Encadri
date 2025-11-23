@@ -1,0 +1,153 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red255\green255\blue254;\red0\green0\blue0;
+\red14\green110\blue109;\red144\green1\blue18;\red191\green28\blue37;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c100000;\cssrgb\c100000\c100000\c99608;\cssrgb\c0\c0\c0;
+\cssrgb\c0\c50196\c50196;\cssrgb\c63922\c8235\c8235;\cssrgb\c80392\c19216\c19216;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs28 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 import\cf0 \strokec4  \cf5 \strokec5 React\cf0 \strokec4 , \{ useState \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "react"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ base44 \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/api/base44Client"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Button\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/button"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Card\cf0 \strokec4 , \cf5 \strokec5 CardContent\cf0 \strokec4 , \cf5 \strokec5 CardHeader\cf0 \strokec4 , \cf5 \strokec5 CardTitle\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/card"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 GraduationCap\cf0 \strokec4 , \cf5 \strokec5 UserCheck\cf0 \strokec4 , \cf5 \strokec5 ArrowRight\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "lucide-react"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ toast \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "sonner"\cf0 \strokec4 ;\cb1 \strokec4 \
+\
+\cf2 \cb3 \strokec2 export\cf0 \strokec4  \cf2 \strokec2 default\cf0 \strokec4  \cf2 \strokec2 function\cf0 \strokec4  \cf5 \strokec5 Onboarding\cf0 \strokec4 () \{\cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  [selectedRole, setSelectedRole] = useState(\cf2 \strokec2 null\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  [isSubmitting, setIsSubmitting] = useState(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  handleComplete = \cf2 \strokec2 async\cf0 \strokec4  () => \{\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 if\cf0 \strokec4  (!selectedRole) \{\cb1 \strokec4 \
+\cb3 \strokec4       toast.error(\cf6 \strokec6 "Please select a role"\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4       \cf2 \strokec2 return\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4     \}\cb1 \strokec4 \
+\
+\cb3 \strokec4     setIsSubmitting(\cf2 \strokec2 true\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 try\cf0 \strokec4  \{\cb1 \strokec4 \
+\cb3 \strokec4       \cf2 \strokec2 await\cf0 \strokec4  base44.auth.updateMe(\{ user_role: selectedRole \});\cb1 \strokec4 \
+\cb3 \strokec4       toast.success(\cf6 \strokec6 "Profile completed!"\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4       window.location.href = \cf6 \strokec6 "/Dashboard"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cb3 \strokec4     \} \cf2 \strokec2 catch\cf0 \strokec4  (error) \{\cb1 \strokec4 \
+\cb3 \strokec4       toast.error(\cf6 \strokec6 "Failed to update profile"\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4       setIsSubmitting(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4     \}\cb1 \strokec4 \
+\cb3 \strokec4   \};\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 return\cf0 \strokec4  (\cb1 \strokec4 \
+\cb3 \strokec4     <div className=\cf6 \strokec6 "min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex items-center justify-center p-6"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4       <div className=\cf6 \strokec6 "max-w-4xl w-full"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4         <div className=\cf6 \strokec6 "text-center mb-8"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           <div className=\cf6 \strokec6 "w-16 h-16 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-500/20"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 GraduationCap\cf0 \strokec4  className=\cf6 \strokec6 "w-8 h-8 text-white"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4           </div>\cb1 \strokec4 \
+\cb3 \strokec4           <h1 className=\cf6 \strokec6 "text-4xl font-bold text-slate-900 mb-2"\cf0 \strokec4 >\cf5 \strokec5 Bienvenue\cf0 \strokec4  sur \cf5 \strokec5 Encadri\cf0 \strokec4 !</h1>\cb1 \strokec4 \
+\cb3 \strokec4           <p className=\cf6 \strokec6 "text-slate-600 text-lg"\cf0 \strokec4 >\cf5 \strokec5 Choisissez\cf0 \strokec4  votre r\cf7 \strokec7 \'f4\cf0 \strokec4 le pour commencer</p>\cb1 \strokec4 \
+\cb3 \strokec4         </div>\cb1 \strokec4 \
+\
+\cb3 \strokec4         <div className=\cf6 \strokec6 "grid md:grid-cols-2 gap-6 mb-8"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           <\cf5 \strokec5 Card\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4             className=\{\cf6 \strokec6 `cursor-pointer transition-all duration-300 hover:shadow-2xl \cf0 \strokec4 $\{\cb1 \strokec4 \
+\cb3 \strokec4               selectedRole === \cf6 \strokec6 'student'\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4                 ? \cf6 \strokec6 'border-indigo-500 border-2 shadow-xl shadow-indigo-200/50'\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4                 : \cf6 \strokec6 'border-slate-200 hover:border-indigo-300'\cf0 \cb1 \strokec4 \
+\cb3 \strokec4             \}\cf6 \strokec6 `\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4             onClick=\{() => setSelectedRole(\cf6 \strokec6 'student'\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4           >\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 CardHeader\cf0 \strokec4  className=\cf6 \strokec6 "text-center pb-4"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "w-20 h-20 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <\cf5 \strokec5 GraduationCap\cf0 \strokec4  className=\cf6 \strokec6 "w-10 h-10 text-white"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 CardTitle\cf0 \strokec4  className=\cf6 \strokec6 "text-2xl"\cf0 \strokec4 >\cf7 \strokec7 \'c9\cf0 \strokec4 tudiant</\cf5 \strokec5 CardTitle\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             </\cf5 \strokec5 CardHeader\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 CardContent\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <p className=\cf6 \strokec6 "text-slate-600 text-center mb-4"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 \cf5 \strokec5 Je\cf0 \strokec4  suis un \cf7 \strokec7 \'e9\cf0 \strokec4 tudiant qui travaille sur des projets acad\cf7 \strokec7 \'e9\cf0 \strokec4 miques\cb1 \strokec4 \
+\cb3 \strokec4               </p>\cb1 \strokec4 \
+\cb3 \strokec4               <ul className=\cf6 \strokec6 "space-y-2 text-sm text-slate-600"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <li className=\cf6 \strokec6 "flex items-center gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <div className=\cf6 \strokec6 "w-1.5 h-1.5 rounded-full bg-indigo-500"\cf0 \strokec4 ></div>\cb1 \strokec4 \
+\cb3 \strokec4                   \cf5 \strokec5 Accepter\cf0 \strokec4  des invitations de projets\cb1 \strokec4 \
+\cb3 \strokec4                 </li>\cb1 \strokec4 \
+\cb3 \strokec4                 <li className=\cf6 \strokec6 "flex items-center gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <div className=\cf6 \strokec6 "w-1.5 h-1.5 rounded-full bg-indigo-500"\cf0 \strokec4 ></div>\cb1 \strokec4 \
+\cb3 \strokec4                   \cf5 \strokec5 Soumettre\cf0 \strokec4  des documents et rapports\cb1 \strokec4 \
+\cb3 \strokec4                 </li>\cb1 \strokec4 \
+\cb3 \strokec4                 <li className=\cf6 \strokec6 "flex items-center gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <div className=\cf6 \strokec6 "w-1.5 h-1.5 rounded-full bg-indigo-500"\cf0 \strokec4 ></div>\cb1 \strokec4 \
+\cb3 \strokec4                   \cf5 \strokec5 Suivre\cf0 \strokec4  la progression des projets\cb1 \strokec4 \
+\cb3 \strokec4                 </li>\cb1 \strokec4 \
+\cb3 \strokec4                 <li className=\cf6 \strokec6 "flex items-center gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <div className=\cf6 \strokec6 "w-1.5 h-1.5 rounded-full bg-indigo-500"\cf0 \strokec4 ></div>\cb1 \strokec4 \
+\cb3 \strokec4                   \cf5 \strokec5 Communiquer\cf0 \strokec4  avec mon superviseur\cb1 \strokec4 \
+\cb3 \strokec4                 </li>\cb1 \strokec4 \
+\cb3 \strokec4               </ul>\cb1 \strokec4 \
+\cb3 \strokec4             </\cf5 \strokec5 CardContent\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           </\cf5 \strokec5 Card\cf0 \strokec4 >\cb1 \strokec4 \
+\
+\cb3 \strokec4           <\cf5 \strokec5 Card\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4             className=\{\cf6 \strokec6 `cursor-pointer transition-all duration-300 hover:shadow-2xl \cf0 \strokec4 $\{\cb1 \strokec4 \
+\cb3 \strokec4               selectedRole === \cf6 \strokec6 'supervisor'\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4                 ? \cf6 \strokec6 'border-purple-500 border-2 shadow-xl shadow-purple-200/50'\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4                 : \cf6 \strokec6 'border-slate-200 hover:border-purple-300'\cf0 \cb1 \strokec4 \
+\cb3 \strokec4             \}\cf6 \strokec6 `\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4             onClick=\{() => setSelectedRole(\cf6 \strokec6 'supervisor'\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4           >\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 CardHeader\cf0 \strokec4  className=\cf6 \strokec6 "text-center pb-4"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <\cf5 \strokec5 UserCheck\cf0 \strokec4  className=\cf6 \strokec6 "w-10 h-10 text-white"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 CardTitle\cf0 \strokec4  className=\cf6 \strokec6 "text-2xl"\cf0 \strokec4 >\cf5 \strokec5 Superviseur\cf0 \strokec4 </\cf5 \strokec5 CardTitle\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             </\cf5 \strokec5 CardHeader\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 CardContent\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <p className=\cf6 \strokec6 "text-slate-600 text-center mb-4"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 \cf5 \strokec5 Je\cf0 \strokec4  suis un encadrant qui supervise des projets \cf7 \strokec7 \'e9\cf0 \strokec4 tudiants\cb1 \strokec4 \
+\cb3 \strokec4               </p>\cb1 \strokec4 \
+\cb3 \strokec4               <ul className=\cf6 \strokec6 "space-y-2 text-sm text-slate-600"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 <li className=\cf6 \strokec6 "flex items-center gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <div className=\cf6 \strokec6 "w-1.5 h-1.5 rounded-full bg-purple-500"\cf0 \strokec4 ></div>\cb1 \strokec4 \
+\cb3 \strokec4                   \cf5 \strokec5 Cr\cf7 \strokec7 \'e9\cf0 \strokec4 er et assigner des projets\cb1 \strokec4 \
+\cb3 \strokec4                 </li>\cb1 \strokec4 \
+\cb3 \strokec4                 <li className=\cf6 \strokec6 "flex items-center gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <div className=\cf6 \strokec6 "w-1.5 h-1.5 rounded-full bg-purple-500"\cf0 \strokec4 ></div>\cb1 \strokec4 \
+\cb3 \strokec4                   \cf7 \strokec7 \'c9\cf0 \strokec4 valuer les soumissions\cb1 \strokec4 \
+\cb3 \strokec4                 </li>\cb1 \strokec4 \
+\cb3 \strokec4                 <li className=\cf6 \strokec6 "flex items-center gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <div className=\cf6 \strokec6 "w-1.5 h-1.5 rounded-full bg-purple-500"\cf0 \strokec4 ></div>\cb1 \strokec4 \
+\cb3 \strokec4                   \cf5 \strokec5 Suivre\cf0 \strokec4  la progression des \cf7 \strokec7 \'e9\cf0 \strokec4 tudiants\cb1 \strokec4 \
+\cb3 \strokec4                 </li>\cb1 \strokec4 \
+\cb3 \strokec4                 <li className=\cf6 \strokec6 "flex items-center gap-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                   <div className=\cf6 \strokec6 "w-1.5 h-1.5 rounded-full bg-purple-500"\cf0 \strokec4 ></div>\cb1 \strokec4 \
+\cb3 \strokec4                   \cf5 \strokec5 G\cf7 \strokec7 \'e9\cf0 \strokec4 rer les milestones et deadlines\cb1 \strokec4 \
+\cb3 \strokec4                 </li>\cb1 \strokec4 \
+\cb3 \strokec4               </ul>\cb1 \strokec4 \
+\cb3 \strokec4             </\cf5 \strokec5 CardContent\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           </\cf5 \strokec5 Card\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4         </div>\cb1 \strokec4 \
+\
+\cb3 \strokec4         <div className=\cf6 \strokec6 "text-center"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           <\cf5 \strokec5 Button\cf0 \cb1 \strokec4 \
+\cb3 \strokec4             onClick=\{handleComplete\}\cb1 \strokec4 \
+\cb3 \strokec4             disabled=\{!selectedRole || isSubmitting\}\cb1 \strokec4 \
+\cb3 \strokec4             size=\cf6 \strokec6 "lg"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4             className=\{\cf6 \strokec6 `px-8 py-6 text-lg shadow-xl transition-all duration-300 \cf0 \strokec4 $\{\cb1 \strokec4 \
+\cb3 \strokec4               selectedRole === \cf6 \strokec6 'student'\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4                 ? \cf6 \strokec6 'bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 shadow-indigo-500/30'\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4                 : selectedRole === \cf6 \strokec6 'supervisor'\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 ? \cf6 \strokec6 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 shadow-purple-500/30'\cf0 \cb1 \strokec4 \
+\cb3 \strokec4                 : \cf6 \strokec6 'bg-slate-300'\cf0 \cb1 \strokec4 \
+\cb3 \strokec4             \}\cf6 \strokec6 `\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4           >\cb1 \strokec4 \
+\cb3 \strokec4             \{isSubmitting ? \cf6 \strokec6 "Configuration..."\cf0 \strokec4  : \cf6 \strokec6 "Continuer"\cf0 \strokec4 \}\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 ArrowRight\cf0 \strokec4  className=\cf6 \strokec6 "w-5 h-5 ml-2"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4           </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4         </div>\cb1 \strokec4 \
+\cb3 \strokec4       </div>\cb1 \strokec4 \
+\cb3 \strokec4     </div>\cb1 \strokec4 \
+\cb3 \strokec4   );\cb1 \strokec4 \
+\cb3 \strokec4 \}\cb1 \strokec4 \
+}

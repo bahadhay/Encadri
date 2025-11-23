@@ -1,0 +1,33 @@
+# Node modules
+node_modules/
+encadri-angular/node_modules/
+
+# Build outputs
+encadri-angular/dist/
+encadri-angular/.angular/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+*.tmp
+.tmp/

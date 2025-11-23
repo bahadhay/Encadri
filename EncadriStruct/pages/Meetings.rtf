@@ -1,0 +1,219 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red255\green255\blue254;\red0\green0\blue0;
+\red14\green110\blue109;\red144\green1\blue18;\red19\green118\blue70;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c100000;\cssrgb\c100000\c100000\c99608;\cssrgb\c0\c0\c0;
+\cssrgb\c0\c50196\c50196;\cssrgb\c63922\c8235\c8235;\cssrgb\c3529\c52549\c34510;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs28 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 import\cf0 \strokec4  \cf5 \strokec5 React\cf0 \strokec4 , \{ useState, useEffect \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "react"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ base44 \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/api/base44Client"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ useQuery, useMutation, useQueryClient \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@tanstack/react-query"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Card\cf0 \strokec4 , \cf5 \strokec5 CardContent\cf0 \strokec4 , \cf5 \strokec5 CardHeader\cf0 \strokec4 , \cf5 \strokec5 CardTitle\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/card"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Button\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/button"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Badge\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/badge"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ \cf5 \strokec5 Calendar\cf0 \strokec4 , \cf5 \strokec5 Clock\cf0 \strokec4 , \cf5 \strokec5 MapPin\cf0 \strokec4 , \cf5 \strokec5 Plus\cf0 \strokec4 , \cf5 \strokec5 Video\cf0 \strokec4  \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "lucide-react"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ format \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "date-fns"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{\cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3 \strokec4   \cf5 \strokec5 Dialog\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   \cf5 \strokec5 DialogContent\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   \cf5 \strokec5 DialogHeader\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   \cf5 \strokec5 DialogTitle\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4 \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "@/components/ui/dialog"\cf0 \strokec4 ;\cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \{ toast \} \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "sonner"\cf0 \strokec4 ;\cb1 \strokec4 \
+\
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \cf5 \strokec5 MeetingForm\cf0 \strokec4  \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "../components/meetings/MeetingForm"\cf0 \strokec4 ;\cb1 \strokec4 \
+\cf2 \cb3 \strokec2 import\cf0 \strokec4  \cf5 \strokec5 MeetingCard\cf0 \strokec4  \cf2 \strokec2 from\cf0 \strokec4  \cf6 \strokec6 "../components/meetings/MeetingCard"\cf0 \strokec4 ;\cb1 \strokec4 \
+\
+\cf2 \cb3 \strokec2 const\cf0 \strokec4  statusColors = \{\cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3 \strokec4   pending: \cf6 \strokec6 "bg-amber-100 text-amber-700 border-amber-300"\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   confirmed: \cf6 \strokec6 "bg-blue-100 text-blue-700 border-blue-300"\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   completed: \cf6 \strokec6 "bg-emerald-100 text-emerald-700 border-emerald-300"\cf0 \strokec4 ,\cb1 \strokec4 \
+\cb3 \strokec4   cancelled: \cf6 \strokec6 "bg-red-100 text-red-700 border-red-300"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4 \};\cb1 \strokec4 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 export\cf0 \strokec4  \cf2 \strokec2 default\cf0 \strokec4  \cf2 \strokec2 function\cf0 \strokec4  \cf5 \strokec5 Meetings\cf0 \strokec4 () \{\cb1 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  [user, setUser] = useState(\cf2 \strokec2 null\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  [showCreateDialog, setShowCreateDialog] = useState(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  [selectedProject, setSelectedProject] = useState(\cf2 \strokec2 null\cf0 \strokec4 );\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  queryClient = useQueryClient();\cb1 \strokec4 \
+\
+\cb3 \strokec4   useEffect(() => \{\cb1 \strokec4 \
+\cb3 \strokec4     base44.auth.me().then(setUser).\cf2 \strokec2 catch\cf0 \strokec4 (() => \{\});\cb1 \strokec4 \
+\cb3 \strokec4   \}, []);\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  \{ data: meetings = [], isLoading \} = useQuery(\{\cb1 \strokec4 \
+\cb3 \strokec4     queryKey: [\cf6 \strokec6 'meetings'\cf0 \strokec4 ],\cb1 \strokec4 \
+\cb3 \strokec4     queryFn: () => base44.entities.\cf5 \strokec5 Meeting\cf0 \strokec4 .list(\cf6 \strokec6 '-scheduled_at'\cf0 \strokec4 ),\cb1 \strokec4 \
+\cb3 \strokec4     enabled: !!user,\cb1 \strokec4 \
+\cb3 \strokec4   \});\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  \{ data: projects = [] \} = useQuery(\{\cb1 \strokec4 \
+\cb3 \strokec4     queryKey: [\cf6 \strokec6 'projects'\cf0 \strokec4 ],\cb1 \strokec4 \
+\cb3 \strokec4     queryFn: () => base44.entities.\cf5 \strokec5 Project\cf0 \strokec4 .list(),\cb1 \strokec4 \
+\cb3 \strokec4     enabled: !!user,\cb1 \strokec4 \
+\cb3 \strokec4   \});\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  createMeetingMutation = useMutation(\{\cb1 \strokec4 \
+\cb3 \strokec4     mutationFn: (data) => base44.entities.\cf5 \strokec5 Meeting\cf0 \strokec4 .create(data),\cb1 \strokec4 \
+\cb3 \strokec4     onSuccess: () => \{\cb1 \strokec4 \
+\cb3 \strokec4       queryClient.invalidateQueries(\{ queryKey: [\cf6 \strokec6 'meetings'\cf0 \strokec4 ] \});\cb1 \strokec4 \
+\cb3 \strokec4       setShowCreateDialog(\cf2 \strokec2 false\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4       setSelectedProject(\cf2 \strokec2 null\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4       toast.success(\cf6 \strokec6 "Meeting scheduled successfully"\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4     \},\cb1 \strokec4 \
+\cb3 \strokec4   \});\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  updateMeetingMutation = useMutation(\{\cb1 \strokec4 \
+\cb3 \strokec4     mutationFn: (\{ id, data \}) => base44.entities.\cf5 \strokec5 Meeting\cf0 \strokec4 .update(id, data),\cb1 \strokec4 \
+\cb3 \strokec4     onSuccess: () => \{\cb1 \strokec4 \
+\cb3 \strokec4       queryClient.invalidateQueries(\{ queryKey: [\cf6 \strokec6 'meetings'\cf0 \strokec4 ] \});\cb1 \strokec4 \
+\cb3 \strokec4       toast.success(\cf6 \strokec6 "Meeting updated"\cf0 \strokec4 );\cb1 \strokec4 \
+\cb3 \strokec4     \},\cb1 \strokec4 \
+\cb3 \strokec4   \});\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 if\cf0 \strokec4  (!user) \{\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 return\cf0 \strokec4  (\cb1 \strokec4 \
+\cb3 \strokec4       <div className=\cf6 \strokec6 "flex items-center justify-center min-h-screen"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4         <div className=\cf6 \strokec6 "animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"\cf0 \strokec4 ></div>\cb1 \strokec4 \
+\cb3 \strokec4       </div>\cb1 \strokec4 \
+\cb3 \strokec4     );\cb1 \strokec4 \
+\cb3 \strokec4   \}\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  myProjects = user.user_role === \cf6 \strokec6 "student"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4     ? projects.filter(p => p.student_email === user.email)\cb1 \strokec4 \
+\cb3 \strokec4     : projects.filter(p => p.supervisor_email === user.email);\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  myMeetings = meetings.filter(m => \{\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 const\cf0 \strokec4  project = projects.find(p => p.id === m.project_id);\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 if\cf0 \strokec4  (user.user_role === \cf6 \strokec6 "student"\cf0 \strokec4 ) \{\cb1 \strokec4 \
+\cb3 \strokec4       \cf2 \strokec2 return\cf0 \strokec4  project?.student_email === user.email;\cb1 \strokec4 \
+\cb3 \strokec4     \}\cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 return\cf0 \strokec4  project?.supervisor_email === user.email;\cb1 \strokec4 \
+\cb3 \strokec4   \});\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  upcomingMeetings = myMeetings.filter(m => \cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 new\cf0 \strokec4  \cf5 \strokec5 Date\cf0 \strokec4 (m.scheduled_at) > \cf2 \strokec2 new\cf0 \strokec4  \cf5 \strokec5 Date\cf0 \strokec4 () && m.status !== \cf6 \strokec6 'cancelled'\cf0 \cb1 \strokec4 \
+\cb3 \strokec4   );\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  pastMeetings = myMeetings.filter(m => \cb1 \strokec4 \
+\cb3 \strokec4     \cf2 \strokec2 new\cf0 \strokec4  \cf5 \strokec5 Date\cf0 \strokec4 (m.scheduled_at) <= \cf2 \strokec2 new\cf0 \strokec4  \cf5 \strokec5 Date\cf0 \strokec4 () || m.status === \cf6 \strokec6 'completed'\cf0 \cb1 \strokec4 \
+\cb3 \strokec4   );\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  handleCreateMeeting = (formData) => \{\cb1 \strokec4 \
+\cb3 \strokec4     createMeetingMutation.mutate(\{\cb1 \strokec4 \
+\cb3 \strokec4       ...formData,\cb1 \strokec4 \
+\cb3 \strokec4       requested_by: user.email\cb1 \strokec4 \
+\cb3 \strokec4     \});\cb1 \strokec4 \
+\cb3 \strokec4   \};\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 const\cf0 \strokec4  handleUpdateStatus = (meetingId, status) => \{\cb1 \strokec4 \
+\cb3 \strokec4     updateMeetingMutation.mutate(\{\cb1 \strokec4 \
+\cb3 \strokec4       id: meetingId,\cb1 \strokec4 \
+\cb3 \strokec4       data: \{ status \}\cb1 \strokec4 \
+\cb3 \strokec4     \});\cb1 \strokec4 \
+\cb3 \strokec4   \};\cb1 \strokec4 \
+\
+\cb3 \strokec4   \cf2 \strokec2 return\cf0 \strokec4  (\cb1 \strokec4 \
+\cb3 \strokec4     <div className=\cf6 \strokec6 "p-6 lg:p-8"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4       <div className=\cf6 \strokec6 "flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4         <div>\cb1 \strokec4 \
+\cb3 \strokec4           <h1 className=\cf6 \strokec6 "text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             \cf5 \strokec5 Meetings\cf0 \cb1 \strokec4 \
+\cb3 \strokec4           </h1>\cb1 \strokec4 \
+\cb3 \strokec4           <p className=\cf6 \strokec6 "text-slate-500 mt-2"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             \cf5 \strokec5 Schedule\cf0 \strokec4  and manage project meetings\cb1 \strokec4 \
+\cb3 \strokec4           </p>\cb1 \strokec4 \
+\cb3 \strokec4         </div>\cb1 \strokec4 \
+\cb3 \strokec4         <\cf5 \strokec5 Button\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4           onClick=\{() => setShowCreateDialog(\cf2 \strokec2 true\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4           className=\cf6 \strokec6 "bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 shadow-lg shadow-indigo-500/20"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4         >\cb1 \strokec4 \
+\cb3 \strokec4           <\cf5 \strokec5 Plus\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 mr-2"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4           \cf5 \strokec5 Schedule\cf0 \strokec4  \cf5 \strokec5 Meeting\cf0 \cb1 \strokec4 \
+\cb3 \strokec4         </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4       </div>\cb1 \strokec4 \
+\
+\cb3 \strokec4       \{isLoading ? (\cb1 \strokec4 \
+\cb3 \strokec4         <div className=\cf6 \strokec6 "text-center py-12"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           <div className=\cf6 \strokec6 "animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"\cf0 \strokec4 ></div>\cb1 \strokec4 \
+\cb3 \strokec4           <p className=\cf6 \strokec6 "text-slate-500 mt-4"\cf0 \strokec4 >\cf5 \strokec5 Loading\cf0 \strokec4  meetings...</p>\cb1 \strokec4 \
+\cb3 \strokec4         </div>\cb1 \strokec4 \
+\cb3 \strokec4       ) : (\cb1 \strokec4 \
+\cb3 \strokec4         <div className=\cf6 \strokec6 "space-y-8"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           \{upcomingMeetings.length > \cf7 \strokec7 0\cf0 \strokec4  && (\cb1 \strokec4 \
+\cb3 \strokec4             <div>\cb1 \strokec4 \
+\cb3 \strokec4               <h2 className=\cf6 \strokec6 "text-xl font-bold text-slate-900 mb-4"\cf0 \strokec4 >\cf5 \strokec5 Upcoming\cf0 \strokec4  \cf5 \strokec5 Meetings\cf0 \strokec4 </h2>\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "grid md:grid-cols-2 gap-6"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 \{upcomingMeetings.map(meeting => (\cb1 \strokec4 \
+\cb3 \strokec4                   <\cf5 \strokec5 MeetingCard\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4                     key=\{meeting.id\}\cb1 \strokec4 \
+\cb3 \strokec4                     meeting=\{meeting\}\cb1 \strokec4 \
+\cb3 \strokec4                     project=\{projects.find(p => p.id === meeting.project_id)\}\cb1 \strokec4 \
+\cb3 \strokec4                     onUpdateStatus=\{handleUpdateStatus\}\cb1 \strokec4 \
+\cb3 \strokec4                     user=\{user\}\cb1 \strokec4 \
+\cb3 \strokec4                   />\cb1 \strokec4 \
+\cb3 \strokec4                 ))\}\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4             </div>\cb1 \strokec4 \
+\cb3 \strokec4           )\}\cb1 \strokec4 \
+\
+\cb3 \strokec4           \{pastMeetings.length > \cf7 \strokec7 0\cf0 \strokec4  && (\cb1 \strokec4 \
+\cb3 \strokec4             <div>\cb1 \strokec4 \
+\cb3 \strokec4               <h2 className=\cf6 \strokec6 "text-xl font-bold text-slate-900 mb-4"\cf0 \strokec4 >\cf5 \strokec5 Past\cf0 \strokec4  \cf5 \strokec5 Meetings\cf0 \strokec4 </h2>\cb1 \strokec4 \
+\cb3 \strokec4               <div className=\cf6 \strokec6 "grid md:grid-cols-2 gap-6"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4                 \{pastMeetings.map(meeting => (\cb1 \strokec4 \
+\cb3 \strokec4                   <\cf5 \strokec5 MeetingCard\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4                     key=\{meeting.id\}\cb1 \strokec4 \
+\cb3 \strokec4                     meeting=\{meeting\}\cb1 \strokec4 \
+\cb3 \strokec4                     project=\{projects.find(p => p.id === meeting.project_id)\}\cb1 \strokec4 \
+\cb3 \strokec4                     onUpdateStatus=\{handleUpdateStatus\}\cb1 \strokec4 \
+\cb3 \strokec4                     user=\{user\}\cb1 \strokec4 \
+\cb3 \strokec4                   />\cb1 \strokec4 \
+\cb3 \strokec4                 ))\}\cb1 \strokec4 \
+\cb3 \strokec4               </div>\cb1 \strokec4 \
+\cb3 \strokec4             </div>\cb1 \strokec4 \
+\cb3 \strokec4           )\}\cb1 \strokec4 \
+\
+\cb3 \strokec4           \{myMeetings.length === \cf7 \strokec7 0\cf0 \strokec4  && (\cb1 \strokec4 \
+\cb3 \strokec4             <div className=\cf6 \strokec6 "text-center py-12 bg-white rounded-xl border border-slate-200 shadow-lg"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 Calendar\cf0 \strokec4  className=\cf6 \strokec6 "w-12 h-12 text-slate-300 mx-auto mb-4"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4               <p className=\cf6 \strokec6 "text-slate-500 mb-4"\cf0 \strokec4 >\cf5 \strokec5 No\cf0 \strokec4  meetings scheduled</p>\cb1 \strokec4 \
+\cb3 \strokec4               <\cf5 \strokec5 Button\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4                 onClick=\{() => setShowCreateDialog(\cf2 \strokec2 true\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4                 className=\cf6 \strokec6 "bg-gradient-to-r from-indigo-600 to-indigo-700"\cf0 \cb1 \strokec4 \
+\cb3 \strokec4               >\cb1 \strokec4 \
+\cb3 \strokec4                 <\cf5 \strokec5 Plus\cf0 \strokec4  className=\cf6 \strokec6 "w-4 h-4 mr-2"\cf0 \strokec4  />\cb1 \strokec4 \
+\cb3 \strokec4                 \cf5 \strokec5 Schedule\cf0 \strokec4  \cf5 \strokec5 First\cf0 \strokec4  \cf5 \strokec5 Meeting\cf0 \cb1 \strokec4 \
+\cb3 \strokec4               </\cf5 \strokec5 Button\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             </div>\cb1 \strokec4 \
+\cb3 \strokec4           )\}\cb1 \strokec4 \
+\cb3 \strokec4         </div>\cb1 \strokec4 \
+\cb3 \strokec4       )\}\cb1 \strokec4 \
+\
+\cb3 \strokec4       <\cf5 \strokec5 Dialog\cf0 \strokec4  open=\{showCreateDialog\} onOpenChange=\{setShowCreateDialog\}>\cb1 \strokec4 \
+\cb3 \strokec4         <\cf5 \strokec5 DialogContent\cf0 \strokec4  className=\cf6 \strokec6 "max-w-2xl"\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           <\cf5 \strokec5 DialogHeader\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4             <\cf5 \strokec5 DialogTitle\cf0 \strokec4  className=\cf6 \strokec6 "text-2xl font-bold"\cf0 \strokec4 >\cf5 \strokec5 Schedule\cf0 \strokec4  \cf5 \strokec5 Meeting\cf0 \strokec4 </\cf5 \strokec5 DialogTitle\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           </\cf5 \strokec5 DialogHeader\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4           <\cf5 \strokec5 MeetingForm\cf0 \strokec4  \cb1 \strokec4 \
+\cb3 \strokec4             projects=\{myProjects\}\cb1 \strokec4 \
+\cb3 \strokec4             onSubmit=\{handleCreateMeeting\}\cb1 \strokec4 \
+\cb3 \strokec4             onCancel=\{() => setShowCreateDialog(\cf2 \strokec2 false\cf0 \strokec4 )\}\cb1 \strokec4 \
+\cb3 \strokec4             isSubmitting=\{createMeetingMutation.isPending\}\cb1 \strokec4 \
+\cb3 \strokec4           />\cb1 \strokec4 \
+\cb3 \strokec4         </\cf5 \strokec5 DialogContent\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4       </\cf5 \strokec5 Dialog\cf0 \strokec4 >\cb1 \strokec4 \
+\cb3 \strokec4     </div>\cb1 \strokec4 \
+\cb3 \strokec4   );\cb1 \strokec4 \
+\cb3 \strokec4 \}\cb1 \strokec4 \
+}
