@@ -12,6 +12,8 @@ import { AvatarComponent } from '../../shared/components/avatar/avatar.component
 interface SubmissionWithFiles extends Submission {
   files?: { name: string; size: string; type: string }[];
   comments?: { author: string; text: string; date: string }[];
+  project_title?: string;
+  student_name?: string;
 }
 
 @Component({
@@ -70,7 +72,7 @@ interface SubmissionWithFiles extends Submission {
               <option value="pending">Pending Review</option>
               <option value="approved">Approved</option>
               <option value="rejected">Rejected</option>
-              <option value="revision_required">Revision Required</option>
+              <option value="needs_revision">Revision Required</option>
             </select>
           </div>
 
@@ -136,10 +138,10 @@ interface SubmissionWithFiles extends Submission {
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                <span>{{ formatDate(submission.submission_date) }}</span>
+                <span>{{ formatDate(submission.created_date) }}</span>
               </div>
-              <app-badge [variant]="getTypeBadgeVariant(submission.submission_type)" size="sm">
-                {{ submission.submission_type }}
+              <app-badge [variant]="getTypeBadgeVariant(submission.type)" size="sm">
+                {{ submission.type }}
               </app-badge>
             </div>
           </div>
@@ -237,7 +239,7 @@ interface SubmissionWithFiles extends Submission {
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Type *</label>
             <select
-              [(ngModel)]="uploadForm.submission_type"
+              [(ngModel)]="uploadForm.type"
               name="type"
               required
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
@@ -306,8 +308,8 @@ interface SubmissionWithFiles extends Submission {
             </div>
             <div>
               <p class="text-sm text-gray-600">Type</p>
-              <app-badge [variant]="getTypeBadgeVariant(selectedSubmission.submission_type)">
-                {{ selectedSubmission.submission_type }}
+              <app-badge [variant]="getTypeBadgeVariant(selectedSubmission.type)">
+                {{ selectedSubmission.type }}
               </app-badge>
             </div>
             <div>
@@ -318,7 +320,7 @@ interface SubmissionWithFiles extends Submission {
             </div>
             <div class="col-span-2">
               <p class="text-sm text-gray-600">Submitted On</p>
-              <p class="font-medium text-gray-900">{{ formatDate(selectedSubmission.submission_date) }}</p>
+              <p class="font-medium text-gray-900">{{ formatDate(selectedSubmission.created_date) }}</p>
             </div>
           </div>
 
@@ -375,7 +377,7 @@ interface SubmissionWithFiles extends Submission {
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                     <option value="approved">Approve</option>
                     <option value="rejected">Reject</option>
-                    <option value="revision_required">Revision Required</option>
+                    <option value="needs_revision">Revision Required</option>
                   </select>
                 </div>
               </div>
@@ -474,9 +476,9 @@ export class SubmissionsComponent implements OnInit {
         project_title: 'E-Commerce Platform',
         title: 'Sprint 1 - UI Components',
         description: 'Completed all reusable UI components including navigation, product cards, and cart functionality.',
-        submission_type: 'deliverable',
-        submission_date: '2024-03-15',
-        student_email: 'student@test.com',
+        type: 'code',
+        created_date: '2024-03-15',
+        submitted_by: 'student@test.com',
         student_name: 'John Student',
         status: 'approved',
         grade: 18.5,
@@ -496,9 +498,9 @@ export class SubmissionsComponent implements OnInit {
         project_title: 'Mobile Banking App',
         title: 'Backend API Implementation',
         description: 'RESTful API with authentication, transaction management, and account services.',
-        submission_type: 'milestone',
-        submission_date: '2024-03-20',
-        student_email: 'student@test.com',
+        type: 'documentation',
+        created_date: '2024-03-20',
+        submitted_by: 'student@test.com',
         student_name: 'John Student',
         status: 'pending',
         files: [
@@ -514,11 +516,11 @@ export class SubmissionsComponent implements OnInit {
         project_title: 'AI Chatbot',
         title: 'Monthly Progress Report - March',
         description: 'Detailed report on chatbot training, integration progress, and performance metrics.',
-        submission_type: 'report',
-        submission_date: '2024-03-28',
-        student_email: 'student@test.com',
+        type: 'report',
+        created_date: '2024-03-28',
+        submitted_by: 'student@test.com',
         student_name: 'John Student',
-        status: 'revision_required',
+        status: 'needs_revision',
         grade: 14,
         feedback: 'Good progress but needs more detailed analysis of accuracy metrics. Please add comparison charts.',
         files: [
@@ -535,9 +537,9 @@ export class SubmissionsComponent implements OnInit {
         project_title: 'E-Commerce Platform',
         title: 'Database Schema Design',
         description: 'Complete database schema with ER diagrams and normalization documentation.',
-        submission_type: 'deliverable',
-        submission_date: '2024-02-20',
-        student_email: 'student@test.com',
+        type: 'code',
+        created_date: '2024-02-20',
+        submitted_by: 'student@test.com',
         student_name: 'John Student',
         status: 'approved',
         grade: 17,
@@ -554,9 +556,9 @@ export class SubmissionsComponent implements OnInit {
   filterSubmissions() {
     this.filteredSubmissions = this.submissions.filter(submission => {
       const matchesProject = !this.selectedProject ||
-        submission.project_title.toLowerCase().includes(this.selectedProject.toLowerCase());
+        submission.project_title?.toLowerCase().includes(this.selectedProject.toLowerCase());
       const matchesStatus = !this.selectedStatus || submission.status === this.selectedStatus;
-      const matchesType = !this.selectedType || submission.submission_type === this.selectedType;
+      const matchesType = !this.selectedType || submission.type === this.selectedType;
 
       return matchesProject && matchesStatus && matchesType;
     });
@@ -564,9 +566,9 @@ export class SubmissionsComponent implements OnInit {
 
   openUploadModal() {
     this.uploadForm = {
-      submission_type: 'deliverable',
-      submission_date: new Date().toISOString().split('T')[0],
-      student_email: 'student@test.com',
+      type: 'code',
+      created_date: new Date().toISOString().split('T')[0],
+      submitted_by: 'student@test.com',
       student_name: 'John Student',
       status: 'pending'
     };
@@ -585,9 +587,9 @@ export class SubmissionsComponent implements OnInit {
       project_title: this.uploadForm.project_title || '',
       title: this.uploadForm.title || '',
       description: this.uploadForm.description,
-      submission_type: this.uploadForm.submission_type || 'deliverable',
-      submission_date: new Date().toISOString().split('T')[0],
-      student_email: 'student@test.com',
+      type: this.uploadForm.type || 'code',
+      created_date: new Date().toISOString().split('T')[0],
+      submitted_by: 'student@test.com',
       student_name: 'John Student',
       status: 'pending',
       files: [
@@ -663,16 +665,16 @@ export class SubmissionsComponent implements OnInit {
       'approved': 'success',
       'pending': 'warning',
       'rejected': 'danger',
-      'revision_required': 'gray'
+      'needs_revision': 'gray'
     };
     return variants[status] || 'gray';
   }
 
   getTypeBadgeVariant(type: string): 'primary' | 'info' | 'success' {
     const variants: { [key: string]: 'primary' | 'info' | 'success' } = {
-      'deliverable': 'primary',
+      'code': 'primary',
       'report': 'info',
-      'milestone': 'success'
+      'documentation': 'success'
     };
     return variants[type] || 'primary';
   }
