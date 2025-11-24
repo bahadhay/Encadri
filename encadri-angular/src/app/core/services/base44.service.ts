@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, BehaviorSubject, throwError } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
+import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
+import { map, catchError, tap, delay } from 'rxjs/operators';
 import { User } from '../models/user.model';
 
 /**
@@ -15,6 +15,9 @@ import { User } from '../models/user.model';
 export class Base44Service {
   // TODO: Replace with your actual Base44 API URL from Base44 dashboard
   private readonly baseUrl = 'https://api.base44.com'; // Update this!
+
+  // Development mode - set to true for mock authentication
+  private readonly DEV_MODE = true;
 
   // Current user state management
   private currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -46,6 +49,11 @@ export class Base44Service {
    * @returns Observable<{ token: string, user: User }>
    */
   login(email: string, password: string): Observable<{ token: string; user: User }> {
+    // Development mode - mock authentication
+    if (this.DEV_MODE) {
+      return this.mockLogin(email, password);
+    }
+
     return this.http.post<{ token: string; user: User }>(
       `${this.baseUrl}/auth/login`,
       { email, password }
@@ -57,6 +65,51 @@ export class Base44Service {
         this.currentUserSubject.next(response.user);
       }),
       catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Mock login for development/testing
+   */
+  private mockLogin(email: string, password: string): Observable<{ token: string; user: User }> {
+    // Mock users for testing
+    const mockUsers: { [key: string]: User } = {
+      'student@test.com': {
+        id: '1',
+        email: 'student@test.com',
+        full_name: 'John Student',
+        user_role: 'student',
+        avatar_url: 'https://ui-avatars.com/api/?name=John+Student&background=4f46e5&color=fff',
+        created_date: new Date().toISOString()
+      },
+      'supervisor@test.com': {
+        id: '2',
+        email: 'supervisor@test.com',
+        full_name: 'Dr. Sarah Supervisor',
+        user_role: 'supervisor',
+        avatar_url: 'https://ui-avatars.com/api/?name=Sarah+Supervisor&background=4f46e5&color=fff',
+        created_date: new Date().toISOString()
+      }
+    };
+
+    // Simulate API delay
+    return of(null).pipe(
+      delay(800),
+      map(() => {
+        const user = mockUsers[email];
+        if (!user || password !== 'password123') {
+          throw new Error('Invalid email or password');
+        }
+
+        const token = 'mock-token-' + Math.random().toString(36).substring(7);
+        return { token, user };
+      }),
+      tap(response => {
+        // Store token
+        localStorage.setItem('auth_token', response.token);
+        // Update user state
+        this.currentUserSubject.next(response.user);
+      })
     );
   }
 

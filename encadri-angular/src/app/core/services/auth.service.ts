@@ -14,13 +14,15 @@ import { User } from '../models/user.model';
   providedIn: 'root'
 })
 export class AuthService {
-  // Expose current user observable from Base44Service
-  public currentUser$ = this.base44Service.currentUser$;
-
   constructor(
     private base44Service: Base44Service,
     private router: Router
   ) {}
+
+  // Expose current user observable from Base44Service
+  get currentUser$() {
+    return this.base44Service.currentUser$;
+  }
 
   /**
    * Login user with email and password
